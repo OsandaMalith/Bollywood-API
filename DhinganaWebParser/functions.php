@@ -76,15 +76,17 @@ function saveAlbum()
 		$albumid = $save->insert_id;
 		$save->close();
 
-		foreach($album["songs"] as $dhinganaId)
+		if (isset($album["songs"]))
 		{
-			$dhinganaId = intval($dhinganaId);
-			$song = $link->prepare("INSERT INTO songs (AlbumID, DhinganaID) VALUES (?,?)");
-			$song->bind_param("ii", $albumid, $dhinganaId);
-			$song->execute();
-			$song->close();
+			foreach($album["songs"] as $dhinganaId)
+			{
+				$dhinganaId = intval($dhinganaId);
+				$song = $link->prepare("INSERT INTO songs (AlbumID, DhinganaID) VALUES (?,?)");
+				$song->bind_param("ii", $albumid, $dhinganaId);
+				$song->execute();
+				$song->close();
+			}
 		}
-
 		echo "Saved ".$album["name"]."";
 	}
 	else
