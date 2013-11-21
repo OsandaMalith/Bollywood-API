@@ -1,13 +1,24 @@
+var category = "latest";
 var dUrl = "http://www.dhingana.com";
-var browseUrl = "http://www.dhingana.com/hindi/latest/songs-albums-browse";
+var browseBaseUrl = "http://www.dhingana.com/hindi/latest/songs-albums-browse-";
 
 var albums = [];
 
+function start()
+{
+	for (var i=0;i<26;i++)
+	{
+		var browseUrl = browseBaseUrl + String.fromCharCode(i + 97);
+		getAlbumsHtml(browseUrl);
+	}
+}
+
 /* POPULATING ALBUMS WITH URL */
-function getAlbumsHtml()
+function getAlbumsHtml(browseUrl)
 {
 	$.ajax({
 		url: "functions.php",
+		async: false,
 		data: {
 			fName: "getHtml",
 			url: browseUrl
@@ -29,7 +40,8 @@ function parseAlbums(html)
 			cast: [],
 			year: 0,
 			musicDirector: [],
-			songs: []
+			songs: [],
+			category: category
 		};
 		
 		if (uniqueAlbum(album))
