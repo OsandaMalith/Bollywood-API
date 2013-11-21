@@ -129,11 +129,9 @@ function saveAlbum(album)
 		},
 		success: function(data)
 		{
-			$("body").append(data);
+			console.log(data);
 		}
 	});
 
-	console.log("Saved " + album.name);
 }
-
 /* END */

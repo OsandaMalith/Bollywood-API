@@ -55,8 +55,16 @@ function doesExist($url)
 function saveAlbum()
 {
 	$album = $_POST["album"];
-	$album["cast"] = json_encode($album["cast"]);
-	$album["musicDirector"] = json_encode($album["musicDirector"]);
+
+	if (isset($album["cast"]))
+		$album["cast"] = json_encode($album["cast"]);
+	else
+		$album["cast"] = "";
+
+	if (isset($album["musicDirector"]))
+		$album["musicDirector"] = json_encode($album["musicDirector"]);
+	else
+		$album["musicDirector"] = "";
 
 	global $link;
 
@@ -77,7 +85,10 @@ function saveAlbum()
 			$song->close();
 		}
 
+		echo "Saved ".$album["name"]."";
 	}
+	else
+		echo "Skipped ".$album["name"]."";
 }
 
 ?>
