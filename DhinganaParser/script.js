@@ -3,8 +3,9 @@ var songs = [];
 var albums = [];
 
 var fromID = 0;
-var count = 300;
+var count = 10;
 
+var saveData=true;
 var startAnotherBatch = true;
 
 function fetchData()
@@ -23,6 +24,7 @@ function fetchData()
 	listOfIds = listOfIds.substring(0, listOfIds.lastIndexOf(','));
 
 	var url = "http://www.dhingana.com/xhr/getSongDetails?id=" + listOfIds;
+	console.log(url);
 
 	$.ajax({
 		url: "functions.php",
@@ -39,7 +41,7 @@ function fetchData()
 			}
 			catch(err)
 			{
-				$("body").html(data);
+				log(data);
 				console.log("Error 1: " + err);
 			}
 		}
@@ -53,11 +55,7 @@ function parseData(data)
 	var qForSongs = data.queue;
 
 	if (qForSongs == undefined)
-	{
-		console.log("Couldn't find any songs in this batch.");
-		startNewBatch();
-		return;
-	}
+		qForSongs = [];
 
 	//Loop over songs
 	for (var i=0;i<qForSongs.length;i++)
@@ -67,13 +65,19 @@ function parseData(data)
 
 		try
 		{
-			if (song.IsDuplicate == 0)
-			{
+			if (song.IsDuplicate == 0 || 1)
+			{	
+				if (song.Singers == undefined)
+					song.Singers="";
+				else
+					song.Singers = JSON.stringify(song.Singers);
+
 				songs.push(song);
 
 				if (qForAlbums.indexOf(song.Album.Id) == -1)
 					qForAlbums.push(song.Album.Id);
-			}	
+			}
+
 		}
 		catch(err)
 		{	
@@ -90,8 +94,13 @@ function parseData(data)
 
 		try
 		{
-			if (album.IsDuplicate == 0)
+			if (album.IsDuplicate == 0 || 1)
 			{
+				if (album.Images == undefined)
+					album.Images="";
+				else
+					album.Images = JSON.stringify(album.Images);
+
 				albums.push(album);
 			}
 		}
@@ -103,12 +112,13 @@ function parseData(data)
 
 	console.log("Albums: " + albums.length + " -- Songs: " + songs.length + " -- Started From: " + fromID);
 
-	if (startAnotherBatch)
-	{
+	if (songs.length>0)
 		saveSongs();
-		saveAlbums();
+	if (albums.length>0)
+	saveAlbums();
+	
+	if (startAnotherBatch)
 		startNewBatch();
-	}
 }
 
 function arrayToLowerCase(array)
@@ -129,32 +139,50 @@ function startNewBatch()
 
 function saveAlbums()
 {
+	if (!saveData)
+		return;
+	
 	$.ajax({
 		url: "functions.php",
 		type: "POST",
+		async: false,
 		data: {
 			fName: "saveAlbums",
 			albums: albums
 		},
 		success: function(data)
 		{
-			$("body").html(data);
+			log(data);
 		}
 	})
 }
 
 function saveSongs()
 {
+	if (!saveData)
+		return;
+
 	$.ajax({
 		url: "functions.php",
 		type: "POST",
+		async: false,
 		data: {
 			fName: "saveSongs",
 			songs: songs
 		},
 		success: function(data)
 		{
-			$("body").html(data);
+			log(data);
 		}
 	})
+}
+
+function stop()
+{
+	startAnotherBatch = false;
+}
+
+function log(str)
+{
+	$(".result").append(str);
 }

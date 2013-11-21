@@ -38,16 +38,13 @@ function saveAlbums()
 	$albums = $_POST["albums"];
 	foreach($albums as $album)
 	{
-		if (isset($album["Images"]))
-			$images = json_encode($album["Images"]);
-		else
-			$images = "";
 
 		$q = "INSERT INTO music.albums (AlbumID,Name,Type,Genre,Likes,Favorites,AlbumArt,URL) VALUES (?,?,?,?,?,?,?,?)";
-		$q = "$q ON DUPLICATE KEY UPDATE Name=?,Type=?,Genre=?,Likes=?,Favorites=?,AlbumArt=?";
+		//$q = "$q ON DUPLICATE KEY UPDATE Name=?,Type=?,Genre=?,Likes=?,Favorites=?,AlbumArt=?";
 
 		$save = $link->prepare($q);
-		$save->bind_param("isssiisssssiis", $album["Id"], $album["Name"], $album["Type"], $album["Genre"], $album["Likes"], $album["Favorites"], $images, $album["Url"], $album["Name"], $album["Type"], $album["Genre"], $album["Likes"], $album["Favorites"], $images);
+		//$save->bind_param("isssiisssssiis", $album["Id"], $album["Name"], $album["Type"], $album["Genre"], $album["Likes"], $album["Favorites"], $album["Images"], $album["Url"], $album["Name"], $album["Type"], $album["Genre"], $album["Likes"], $album["Favorites"], $album["Images"]);
+		$save->bind_param("isssiiss", $album["Id"], $album["Name"], $album["Type"], $album["Genre"], $album["Likes"], $album["Favorites"], $album["Images"], $album["Url"]);
 		$save->execute();
 		$save->close();
 
@@ -62,16 +59,12 @@ function saveSongs()
 
 	foreach($songs as $song)
 	{
-		if (isset($song["Singers"]))
-			$singers = json_encode($song["Singers"]);
-		else
-			$singers = "";
-
-		$q = "INSERT INTO music.songs (SongID,AlbumID,Name,Singers,Likes,Dislikes,Favorites,Mp3) VALUES (?,?,?,?,?,?,?,?)";
-		$q = "$q ON DUPLICATE KEY UPDATE AlbumID=?,Name=?,Singers=?,Likes=?,Dislikes=?,Favorites=?,Mp3=?";
+		$q = "INSERT INTO music.songs (SongID,AlbumID,Name,Singers,Likes,Dislikes,Favorites,Mp3,Size,Duration) VALUES (?,?,?,?,?,?,?,?,?,?)";
+		//$q = "$q ON DUPLICATE KEY UPDATE AlbumID=?,Name=?,Singers=?,Likes=?,Dislikes=?,Favorites=?,Mp3=?";
 
 		$save = $link->prepare($q);
-		$save->bind_param("iissiiisissiiis", $song["Id"], $song["Album"]["Id"], $song["Name"], $singers, $song["Likes"], $song["Dislikes"], $song["Favorites"], $song["Streams"]["Mp3"], $song["Album"]["Id"], $song["Name"], $singers, $song["Likes"], $song["Dislikes"], $song["Favorites"], $song["Streams"]["Mp3"]);
+		//$save->bind_param("iissiiisissiiis", $song["Id"], $song["Album"]["Id"], $song["Name"], $song["Singers"], $song["Likes"], $song["Dislikes"], $song["Favorites"], $song["Streams"]["Mp3"], $song["Album"]["Id"], $song["Name"], $song["Singers"], $song["Likes"], $song["Dislikes"], $song["Favorites"], $song["Streams"]["Mp3"]);
+		$save->bind_param("iissiiisii", $song["Id"], $song["Album"]["Id"], $song["Name"], $song["Singers"], $song["Likes"], $song["Dislikes"], $song["Favorites"], $song["Streams"]["Mp3"], $song["Size"], $song["Duration"]);
 		$save->execute();
 		$save->close();
 	}
