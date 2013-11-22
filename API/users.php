@@ -8,7 +8,7 @@ function createNewUser()
 
 	global $link;
 
-	$createUser = $link->prepare("INSERT INTO music.users (Password) VALUES (?)");
+	$createUser = $link->prepare("INSERT INTO users (Password) VALUES (?)");
 	$createUser->bind_param("s", $password);
 	$createUser->execute();
 	$createUser->close();
@@ -27,7 +27,7 @@ function login($userid, $password)
 {
 	global $link;
 
-	$login = $link->prepare("SELECT UserID FROM music.users WHERE UserID=? AND Password=? ");
+	$login = $link->prepare("SELECT UserID FROM .users WHERE UserID=? AND Password=? ");
 	$login->bind_param("is", $userid, $password);
 	$login->execute();
 	$login->store_result();

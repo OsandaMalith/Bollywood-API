@@ -9,7 +9,7 @@ function createEmptyPlaylist()
 	$userid = $_SESSION["userid"];
 
 	$emptyArray = "[]";
-	$playlist = $link->prepare("INSERT INTO music.playlists (UserID, SongIDs) VALUES (?,?)");
+	$playlist = $link->prepare("INSERT INTO playlists (UserID, SongIDs) VALUES (?,?)");
 	$playlist->bind_param("is", $userid, $emptyArray);
 	$playlist->execute();
 	$playlist->close();
@@ -22,7 +22,7 @@ function getPlaylist()
 	$response = array();
 	$userid = $_SESSION["userid"];
 
-	$playlist = $link->prepare("SELECT * FROM music.playlists WHERE UserID=?");
+	$playlist = $link->prepare("SELECT * FROM playlists WHERE UserID=?");
 	$playlist->bind_param("i", $userid);
 	$playlist->execute();
 
@@ -48,7 +48,7 @@ function updatePlaylistWithSongIDs($songids)
 	global $link;
 	$userid = $_SESSION["userid"];
 
-	$update = $link->prepare("UPDATE music.playlists SET SongIDs=? WHERE UserID=?");
+	$update = $link->prepare("UPDATE playlists SET SongIDs=? WHERE UserID=?");
 	$update->bind_param("si", $songids, $userid);
 	$update->execute();
 	$update->close();

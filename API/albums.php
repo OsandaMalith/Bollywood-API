@@ -6,7 +6,7 @@ function getAlbum($albumid)
 {
 	global $link;
 
-	$album = $link->prepare("SELECT * FROM music.albums WHERE AlbumID=?");
+	$album = $link->prepare("SELECT * FROM albums WHERE AlbumID=?");
 	$album->bind_param("i", $albumid);
 	$album->execute();
 
@@ -37,7 +37,7 @@ function searchAlbumName($name)
 
 	$name = $name."%";
 	
-	$search = $link->prepare("SELECT AlbumID FROM music.albums WHERE NAME LIKE ? OR Name SOUNDS LIKE ? ORDER BY LIKES DESC LIMIT 10");
+	$search = $link->prepare("SELECT AlbumID FROM albums WHERE Name LIKE ? OR Name SOUNDS LIKE ? LIMIT 10");
 	$search->bind_param("ss", $name, $name);
 	$search->execute();
 

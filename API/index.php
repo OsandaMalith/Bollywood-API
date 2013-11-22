@@ -7,9 +7,9 @@ require 'Slim/Slim.php';
 $app = new \Slim\Slim();
 $app->response->headers->set('Content-Type', 'application/json');
 
-$app->get('/test', function () {
-  	getSongsFromAlbum("32349");
-});
+$app->get('/', function () {
+ 	message("Hello World!"); 	
+ });
 
 $app->get('/user/create', function() {
 	createNewUser();

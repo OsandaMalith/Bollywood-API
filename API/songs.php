@@ -6,7 +6,7 @@ function getSong($songid)
 {
 	global $link;
 
-	$album = $link->prepare("SELECT * FROM music.songs WHERE SongID=?");
+	$album = $link->prepare("SELECT * FROM songs WHERE SongID=?");
 	$album->bind_param("i", $songid);
 	$album->execute();
 
@@ -34,7 +34,7 @@ function getSongsFromAlbum($albumid)
 	$response = array();
 	global $link;
 
-	$songs = $link->prepare("SELECT * FROM music.songs WHERE AlbumID=?");
+	$songs = $link->prepare("SELECT * FROM songs WHERE AlbumID=?");
 	$songs->bind_param("i", $albumid);
 	$songs->execute();
 
@@ -57,7 +57,7 @@ function searchSongName($name)
 
 	$name = $name."%";
 	
-	$search = $link->prepare("SELECT SongID FROM music.songs WHERE Name LIKE ? OR Name SOUNDS LIKE ? ORDER BY LIKES DESC LIMIT 15");
+	$search = $link->prepare("SELECT SongID FROM songs WHERE Name LIKE ? OR Name SOUNDS LIKE ? ORDER BY Likes DESC LIMIT 15");
 	$search->bind_param("ss", $name, $name);
 	$search->execute();
 
