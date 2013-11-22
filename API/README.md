@@ -1,6 +1,7 @@
 # API Endpoints
 
 #### Album Object
+```javascript
 {
   AlbumID: 10,
   URL: "http://www.dhingana.com/hindi/aadmi-songs-dilip-kumar-waheeda-rehman-oldies-30f4bd1",
@@ -14,9 +15,11 @@
     Array of Song objects
   ]
 }
+```
 *Songs - May or may not be there depending on the api endpoint
 
 #### Song Object
+```javascript
 {
   SongID: 10,
   AlbumID: 1,
@@ -33,6 +36,7 @@
     Album object
   }
 }
+```
 *Album - May or may not be there depending on the api endpoint
 
 #### GET /search/albums/{album name}
@@ -75,7 +79,7 @@
 Numbers are SongIDs
 
 #### GET /user/create
-###### Required Body
+###### Response
  ```javascript
 {
   "UserID": 14,
