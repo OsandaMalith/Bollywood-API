@@ -52,7 +52,7 @@ function doesExist($url)
 	return $toReturn;
 }
 
-function saveAlbum()
+function saveData()
 {
 	$album = $_POST["album"];
 
@@ -78,13 +78,12 @@ function saveAlbum()
 
 		if (isset($album["songs"]))
 		{
-			foreach($album["songs"] as $dhinganaId)
+			foreach($album["songs"] as $song)
 			{
-				$dhinganaId = intval($dhinganaId);
-				$song = $link->prepare("INSERT INTO songs (AlbumID, DhinganaID) VALUES (?,?)");
-				$song->bind_param("ii", $albumid, $dhinganaId);
-				$song->execute();
-				$song->close();
+				$songQ = $link->prepare("INSERT INTO songs (AlbumID, DhinganaID, Name, Singers, Size, Duration, Mp3, Likes, Dislikes, Favorites) VALUES (?,?,?,?,?,?,?,?,?,?)");
+				$songQ->bind_param("iissiisiii", $albumid, $song["Id"], $song["Name"], $song["Singers"], $song["Size"], $song["Duration"], $song["Streams"]["Mp3"], $song["Likes"], $song["Dislikes"], $song["Favorites"]);
+				$songQ->execute();
+				$songQ->close();
 			}
 		}
 		echo "Saved ".$album["name"]."";
