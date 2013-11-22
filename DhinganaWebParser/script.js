@@ -10,6 +10,7 @@ function start()
 	{
 		var browseUrl = browseBaseUrl + String.fromCharCode(i + 97);
 		getAlbumsHtml(browseUrl);
+		albums = [];
 	}
 }
 
