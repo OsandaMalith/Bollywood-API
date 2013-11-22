@@ -155,6 +155,12 @@ function parseSongs(album, data)
 {
 	var qForSongs = data.queue;
 
+	if (qForSongs == undefined)
+	{
+		console.log("Songs offline for " + album.name)
+		return;
+	}
+
 	for (var i=0;i<qForSongs.length;i++)
 	{
 		var id = qForSongs[i];
