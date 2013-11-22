@@ -70,8 +70,8 @@ function saveAlbum()
 
 	if (!doesExist($album["url"]))
 	{
-		$save = $link->prepare("INSERT INTO albums (URL, AlbumArt, Name, Cast, MusicDirector, Year) VALUES (?,?,?,?,?,?)");
-		$save->bind_param("sssssi", $album["url"], $album["albumArt"], $album["name"], $album["cast"], $album["musicDirector"], $album["year"]);
+		$save = $link->prepare("INSERT INTO albums (URL, AlbumArt, Name, Cast, MusicDirector, Year, Category) VALUES (?,?,?,?,?,?,?)");
+		$save->bind_param("sssssis", $album["url"], $album["albumArt"], $album["name"], $album["cast"], $album["musicDirector"], $album["year"], $album["category"]);
 		$save->execute();
 		$albumid = $save->insert_id;
 		$save->close();
