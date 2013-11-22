@@ -96,3 +96,41 @@ Numbers are SongIDs
 ```javascript
 {"message":"success"}
 ```
+
+#### GET /activity
+###### Response
+ ```javascript
+[
+  {
+    "ActivityID": 1,
+    "SongID": 1,
+    "Type": "listen",
+    "Timestamp": 1385127344
+  },
+  ...
+  {
+    "ActivityID": 3,
+    "SongID": 20,
+    "Type": "skip",
+    "Timestamp": 1385127314
+  }
+]
+ ```
+
+#### POST /activity
+###### Required Body
+ ```javascript
+ [
+    {
+        "SongID": 2,
+        "Type": "listen",
+        "Timestamp": 1385127352
+    },
+    ...
+    {
+        "SongID": 20,
+        "Type": "skip",
+        "Timestamp": 1385127314
+    }
+]
+```
