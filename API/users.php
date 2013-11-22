@@ -27,7 +27,7 @@ function login($userid, $password)
 {
 	global $link;
 
-	$login = $link->prepare("SELECT UserID FROM .users WHERE UserID=? AND Password=? ");
+	$login = $link->prepare("SELECT UserID FROM users WHERE UserID=? AND Password=? ");
 	$login->bind_param("is", $userid, $password);
 	$login->execute();
 	$login->store_result();
