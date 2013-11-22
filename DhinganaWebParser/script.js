@@ -3,7 +3,6 @@ var dUrl = "http://www.dhingana.com";
 var browseBaseUrl = "http://www.dhingana.com/hindi/oldies/songs-albums-browse-";
 
 var albums = [];
-var html = [];
 
 function start()
 {
@@ -19,28 +18,16 @@ function getAlbumsHtml(browseUrl)
 {
 	$.ajax({
 		url: "functions.php",
+		async: false,
 		data: {
 			fName: "getHtml",
 			url: browseUrl
 		},
 		success: function(data)
 		{
-			html.push(data);
-			startParsing();
+			parseAlbums(data);
 		}
 	});
-}
-
-function startParsing()
-{
-	if (html.length!=26)
-		return;
-
-	for (var i=0;i<html.length;i++)
-	{
-		parseAlbums(html[i]);
-		albums = [];
-	}
 }
 
 function parseAlbums(html)
@@ -95,41 +82,36 @@ function getSingleHtml()
 			async: false,
 			success: function(data)
 			{
-				parseAlbumData(i, data);
+				parseAlbumData(albums[i], data);
 			}
 		});
 	}
 }
 
-function parseAlbumData(index, html)
+function parseAlbumData(album, html)
 {
-	var album = albums[index];
-	
 	//console.log("Parsing data for " + album.name);
 
 	album.albumArt = $(html).find(".artwork-image").attr("data-imgsrc");
 
-	var counter = 0;
 	$(html).find(".detail-metadata-actions-wrapper .meta-list.content-viewport-line").each(function() {
 
-		if (counter==0) //CAST
+		if ($(this).find(".title").text()=="Cast:")
 		{
 			$(this).find("a").each(function() {
 				album.cast.push($(this).attr("data-search-keyword"));
 			});
 		}
-		else if(counter==1) //Music Director
+		else if($(this).find(".title").text()=="Music Director:")
 		{
 			$(this).find("a").each(function() {
 				album.musicDirector.push($(this).attr("data-search-keyword"));
 			});
 		}
-		else if(counter==2) //Year
+		else
 		{
 			album.year = $(this).find("a").attr("data-search-keyword");
 		}
-
-		counter++;
 	});
 
 	$(html).find(".listing-row.work.song").each(function()
@@ -137,11 +119,68 @@ function parseAlbumData(index, html)
 		album.songs.push($(this).attr("data-id"));
 	});
 
-	albums[index] = album;
+	fillSongData(album);
+}
+/* END */
+
+/* GET SONG DATA */
+function fillSongData(album)
+{
+	var ids = "";
+	for (var i=0;i<album.songs.length;i++)
+	{
+		ids = ids + album.songs[i] + ",";
+	}
+	
+	album.songs = [];
+
+	var url = "http://www.dhingana.com/xhr/getSongDetails?id=" + ids;
+
+	$.ajax({
+		url: "functions.php",
+		async: false,
+		data: {
+			fName: "getHtml",
+			url: url
+		},
+		success: function(data)
+		{
+			data = $.parseJSON(data);
+			parseSongs(album, data);
+		}
+	});
+}
+
+function parseSongs(album, data)
+{
+	var qForSongs = data.queue;
+
+	for (var i=0;i<qForSongs.length;i++)
+	{
+		var id = qForSongs[i];
+		var song = data.songs[id];
+
+		try
+		{
+			if (song.Singers == undefined)
+				song.Singers="";
+			else
+				song.Singers = JSON.stringify(song.Singers);
+
+			album.songs.push(song);
+		}
+		catch(err)
+		{	
+			console.log("Error: " + err);
+		}
+		
+	}
 
 	saveAlbum(album);
 }
+/* END */
 
+/* SAVE */
 function saveAlbum(album)
 {
 	$.ajax({
@@ -149,7 +188,7 @@ function saveAlbum(album)
 		type: "POST",
 		async: false,
 		data: {
-			fName: "saveAlbum",
+			fName: "saveData",
 			album: album
 		},
 		success: function(data)
