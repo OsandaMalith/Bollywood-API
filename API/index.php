@@ -55,6 +55,10 @@ $app->get("/search/songs/:name", function($name) {
 	echo json_encode(searchSongName($name));
 });
 
+$app->get("/activity", function() {
+	echo json_encode(getUserActivity());
+});
+
 $app->post("/activity", function() {
 	global $app;
 	$activityData = json_decode($app->request->getBody(), true);

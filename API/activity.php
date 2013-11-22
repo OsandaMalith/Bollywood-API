@@ -17,4 +17,27 @@ function postActivityData($data)
 	}
 }
 
+function getUserActivity()
+{
+	global $link;
+
+	$userid = $_SESSION["userid"];
+
+	$activity = array();
+
+	$get = $link->prepare("SELECT ActivityID, SongID, Type, `Timestamp` FROM activity WHERE UserID=?");
+	$get->bind_param("i", $userid);
+	$get->execute();
+
+	$result = $get->get_result();
+	while($row = $result->fetch_array(MYSQLI_ASSOC))
+	{
+		array_push($activity, $row);
+	}
+
+	$get->close();
+
+	return $activity;
+}
+
 ?>
