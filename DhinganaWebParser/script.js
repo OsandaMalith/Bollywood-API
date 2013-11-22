@@ -1,8 +1,9 @@
-var category = "latest";
+var category = "oldies";
 var dUrl = "http://www.dhingana.com";
-var browseBaseUrl = "http://www.dhingana.com/hindi/latest/songs-albums-browse-";
+var browseBaseUrl = "http://www.dhingana.com/hindi/oldies/songs-albums-browse-";
 
 var albums = [];
+var html = [];
 
 function start()
 {
@@ -18,16 +19,25 @@ function getAlbumsHtml(browseUrl)
 {
 	$.ajax({
 		url: "functions.php",
-		async: false,
 		data: {
 			fName: "getHtml",
 			url: browseUrl
 		},
 		success: function(data)
 		{
-			parseAlbums(data);
+			html.push(data);
+			startParsing();
 		}
 	});
+}
+
+function startParsing()
+{
+	if (html.length!=26)
+		return;
+
+	for (var i=0;i<html.length;i++)
+		parseAlbums(html[i]);
 }
 
 function parseAlbums(html)
@@ -44,7 +54,7 @@ function parseAlbums(html)
 			category: category
 		};
 		
-		if (uniqueAlbum(album))
+		if (isUniqueAlbum(album))
 		{
 			//console.log("Adding " + album.name);
 			albums.push(album);
@@ -54,7 +64,7 @@ function parseAlbums(html)
 	getSingleHtml();
 }
 
-function uniqueAlbum(album)
+function isUniqueAlbum(album)
 {
 	for (var i=0;i<albums.length;i++)
 	{
