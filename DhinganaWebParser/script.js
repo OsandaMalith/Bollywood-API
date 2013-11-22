@@ -37,7 +37,10 @@ function startParsing()
 		return;
 
 	for (var i=0;i<html.length;i++)
+	{
 		parseAlbums(html[i]);
+		albums = [];
+	}
 }
 
 function parseAlbums(html)
