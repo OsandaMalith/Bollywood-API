@@ -5,7 +5,7 @@ if (isset($_GET['fName']))
 else if(isset($_POST['fName']))
 	$fname = $_POST['fName'];
 
-$link= new mysqli("127.0.0.1", "root", "");
+$link= new mysqli("127.0.0.1", "root", "mysql");
 $link->select_db("music-web");
 
 call_user_func($fname);

@@ -6,7 +6,7 @@ require_once("songs.php");
 require_once("playlist.php");
 require_once("activity.php");
 
-$link= new mysqli("127.0.0.1", "root", "");
+$link= new mysqli("127.0.0.1", "root", "mysql");
 $link->select_db("music-web");
 
 function message($str)
