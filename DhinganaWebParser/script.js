@@ -1,6 +1,6 @@
-var category = "oldies";
+var category = "pop";
 var dUrl = "http://www.dhingana.com";
-var browseBaseUrl = "http://www.dhingana.com/hindi/oldies/songs-albums-browse-";
+var browseBaseUrl = "http://www.dhingana.com/hindi/pop/songs-albums-browse-";
 
 var albums = [];
 
@@ -13,6 +13,24 @@ function start()
 		albums = [];
 	}
 }
+
+function startSingle(url)
+{
+	var album = {
+		name: "",
+		url: url,
+		albumArt: "",
+		cast: [],
+		year: 0,
+		musicDirector: [],
+		songs: [],
+		category: category
+	};
+
+	albums.push(album);
+	getSingleHtml();
+	albums = [];
+}	
 
 /* POPULATING ALBUMS WITH URL */
 function getAlbumsHtml(browseUrl)
@@ -93,6 +111,7 @@ function parseAlbumData(album, html)
 {
 	//console.log("Parsing data for " + album.name);
 
+	album.name = $(html).find("#item-data-title").attr("data-field-value");
 	album.albumArt = $(html).find(".artwork-image").attr("data-imgsrc");
 
 	$(html).find(".detail-metadata-actions-wrapper .meta-list.content-viewport-line").each(function() {
