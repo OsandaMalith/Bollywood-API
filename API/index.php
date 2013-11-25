@@ -22,18 +22,26 @@ $app->post('/user/login', function() {
 });
 
 $app->get("/albums/:albumid", function($albumid) {
+	global $app;
+	$app->etag('0000');
 	echo json_encode(getAlbum($albumid));
 });
 
 $app->get("/albums/:albumid/songs", function($albumid) {
+	global $app;
+	$app->etag('0000');
 	echo json_encode(getAlbumWithSongs($albumid));
 });
 
 $app->get("/songs/:songid", function($songid) {
+	global $app;
+	$app->etag('0000');
 	echo json_encode(getSong($songid));
 });
 
 $app->get("/songs/:songid/album", function($songid) {
+	global $app;
+	$app->etag('0000');
 	echo json_encode(getSongWithAlbum($songid));
 });
 
@@ -48,10 +56,14 @@ $app->post("/playlist", function() {
 });
 
 $app->get("/search/albums/:name", function($name) {
+	global $app;
+	$app->etag('0000');
 	echo json_encode(searchAlbumName($name));
 });
 
 $app->get("/search/songs/:name", function($name) {
+	global $app;
+	$app->etag('0000');
 	echo json_encode(searchSongName($name));
 });
 
@@ -64,6 +76,8 @@ $app->post("/activity", function() {
 	$activityData = json_decode($app->request->getBody(), true);
 	postActivityData($activityData);
 });
+
+//sleep((mt_rand()%5) + 1);
 
 $app->run();
 
