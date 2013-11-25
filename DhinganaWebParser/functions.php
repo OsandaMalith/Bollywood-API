@@ -12,7 +12,6 @@ call_user_func($fname);
 
 $link->close();
 
-//139.23.33.27
 function getHtml()
 {
 
