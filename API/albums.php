@@ -37,7 +37,7 @@ function searchAlbumName($name)
 
 	$name = $name."%";
 	
-	$search = $link->prepare("SELECT AlbumID FROM albums WHERE Name LIKE ? OR Name SOUNDS LIKE ? LIMIT 10");
+	$search = $link->prepare("SELECT AlbumID FROM albums WHERE Name LIKE ? OR Name SOUNDS LIKE ? ORDER BY Year DESC LIMIT 10");
 	$search->bind_param("ss", $name, $name);
 	$search->execute();
 
