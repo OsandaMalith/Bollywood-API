@@ -20,7 +20,8 @@ function createNewUser()
 	createEmptyPlaylist();
 
 	$response = array('UserID'=>$id, 'Password'=>$password);
-	echo json_encode($response);
+
+	return $response;
 }
 
 function login($userid, $password)
@@ -34,16 +35,16 @@ function login($userid, $password)
 
 	if ($login->num_rows == 1)
 	{
-		message("success");
+		$success = true;
 		$_SESSION["userid"] = $userid;
 	}
 	else
-		message("failed");	
+		$success = false;	
 
 	$login->free_result();
-
 	$login->close();
 	
+	return $success;
 }
 
 

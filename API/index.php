@@ -12,13 +12,17 @@ $app->get('/', function () {
  });
 
 $app->get('/user/create', function() {
-	createNewUser();
+	echo json_encode(createNewUser());
 });
 
 $app->post('/user/login', function() {
 	global $app;
 	$credentials = json_decode($app->request->getBody());
-	login($credentials->userid, $credentials->password);
+	
+	if (login($credentials->userid, $credentials->password))
+		message("success");
+	else
+		message("failed");
 });
 
 $app->get("/albums/:albumid", function($albumid) {
