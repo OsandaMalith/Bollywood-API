@@ -15,16 +15,6 @@ $app->get('/user/create', function() {
 	echo json_encode(createNewUser());
 });
 
-$app->post('/user/login', function() {
-	global $app;
-	$credentials = json_decode($app->request->getBody());
-	
-	if (login($credentials->userid, $credentials->password))
-		message("success");
-	else
-		message("failed");
-});
-
 $app->get("/user/:userid/activity", function($userid) {
 	echo json_encode(getUserActivity($userid));
 });
@@ -80,6 +70,16 @@ $app->post("/playlist", function() {
 	global $app;
 	$songids = $app->request->getBody();
 	updatePlaylistWithSongIDs($songids);
+});
+
+$app->post('/user/login', function() {
+	global $app;
+	$credentials = json_decode($app->request->getBody());
+	
+	if (login($credentials->userid, $credentials->password))
+		message("success");
+	else
+		message("failed");
 });
 */
 

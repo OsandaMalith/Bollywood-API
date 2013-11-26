@@ -72,16 +72,6 @@
 }
 ```
 
-#### POST /user/login
-###### Required Body
-```javascript
- {"userid":14,"password":"UnsecurePassword"}
-```
-###### Response
-```javascript
-{"message":"success"}
-```
-
 #### GET /user/{userid}/activity
 ###### Response
  ```javascript
