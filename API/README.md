@@ -59,24 +59,9 @@
 #### GET /songs/{id}
   Song object
 
+
 #### GET /songs/{id}/album
   Song object with album
-
-
-#### GET /playlist
-  Array of song objects with album
-
-#### POST /playlist
-###### Required Body
-```javascript
-[
-  123,
-  1234,
-  12234,
-  453
-]
-```
-Numbers are SongIDs
 
 #### GET /user/create
 ###### Response

@@ -49,16 +49,6 @@ $app->get("/songs/:songid/album", function($songid) {
 	echo json_encode(getSongWithAlbum($songid));
 });
 
-$app->get("/playlist", function() {
-	echo json_encode(getPlaylist());
-});
-
-$app->post("/playlist", function() {
-	global $app;
-	$songids = $app->request->getBody();
-	updatePlaylistWithSongIDs($songids);
-});
-
 $app->get("/search/albums/:name", function($name) {
 	global $app;
 	$app->etag('0000');
@@ -80,6 +70,18 @@ $app->post("/activity", function() {
 	$activityData = json_decode($app->request->getBody(), true);
 	postActivityData($activityData);
 });
+
+/*
+$app->get("/playlist", function() {
+	echo json_encode(getPlaylist());
+});
+
+$app->post("/playlist", function() {
+	global $app;
+	$songids = $app->request->getBody();
+	updatePlaylistWithSongIDs($songids);
+});
+*/
 
 //sleep((mt_rand()%5) + 1);
 
