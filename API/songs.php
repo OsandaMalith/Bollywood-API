@@ -10,9 +10,9 @@ function getSong($songid)
 	$album->bind_param("i", $songid);
 	$album->execute();
 
-	$result = $album->get_result();
-	$row = $result->fetch_array(MYSQLI_ASSOC);
-	
+	bindArray($album, $row);
+	$album->fetch();
+
 	$album->close();
 
 	return $row;
@@ -38,11 +38,9 @@ function getSongsFromAlbum($albumid)
 	$songs->bind_param("i", $albumid);
 	$songs->execute();
 
-	$result = $songs->get_result();
-	while ($row = $result->fetch_array(MYSQLI_ASSOC))
-	{
+	bindArray($songs, $row);
+	while($songs->fetch())
 		array_push($response, $row);
-	}
 
 	$songs->close();
 
@@ -60,13 +58,13 @@ function searchSongName($name)
 	$search = $link->prepare("SELECT SongID FROM songs WHERE Name LIKE ? OR Name SOUNDS LIKE ? ORDER BY Likes DESC LIMIT 15");
 	$search->bind_param("ss", $name, $name);
 	$search->execute();
+	$search->store_result();
 
-	$result = $search->get_result();
-	while($row = $result->fetch_array(MYSQLI_ASSOC))
-	{
+	bindArray($search, $row);
+	while($search->fetch())
 		array_push($songs, getSongWithAlbum($row["SongID"]));
-	}
 
+	$search->free_result();
 	$search->close();
 
 	return $songs;

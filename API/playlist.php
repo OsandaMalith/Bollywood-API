@@ -26,8 +26,9 @@ function getPlaylist()
 	$playlist->bind_param("i", $userid);
 	$playlist->execute();
 
-	$result = $playlist->get_result();
-	$row = $result->fetch_array(MYSQLI_ASSOC);
+	bindArray($playlist, $row);
+	$playlist->fetch();
+	
 	$songids = json_decode($row["SongIDs"]);
 
 	$playlist->close();

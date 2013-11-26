@@ -10,9 +10,9 @@ function getAlbum($albumid)
 	$album->bind_param("i", $albumid);
 	$album->execute();
 
-	$result = $album->get_result();
-	$row = $result->fetch_array(MYSQLI_ASSOC);
-	
+	bindArray($album, $row);
+	$album->fetch();
+
 	$album->close();
 
 	return $row;
@@ -40,13 +40,13 @@ function searchAlbumName($name)
 	$search = $link->prepare("SELECT AlbumID FROM albums WHERE Name LIKE ? OR Name SOUNDS LIKE ? ORDER BY Year DESC LIMIT 10");
 	$search->bind_param("ss", $name, $name);
 	$search->execute();
+	$search->store_result();
 
-	$result = $search->get_result();
-	while($row = $result->fetch_array(MYSQLI_ASSOC))
-	{
+	bindArray($search, $row);
+	while($search->fetch())
 		array_push($albums, getAlbumWithSongs($row["AlbumID"]));
-	}
 
+	$search->free_result();
 	$search->close();
 
 	return $albums;

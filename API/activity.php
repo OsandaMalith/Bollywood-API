@@ -29,11 +29,9 @@ function getUserActivity()
 	$get->bind_param("i", $userid);
 	$get->execute();
 
-	$result = $get->get_result();
-	while($row = $result->fetch_array(MYSQLI_ASSOC))
-	{
+	bindArray($get, $row);
+	while($get->fetch())
 		array_push($activity, $row);
-	}
 
 	$get->close();
 
