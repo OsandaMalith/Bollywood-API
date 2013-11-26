@@ -21,13 +21,13 @@ function getUserActivity($userid)
 
 	$activity = array();
 
-	$get = $link->prepare("SELECT ActivityID, SongID, Type, `Timestamp` FROM activity WHERE UserID=?");
+	$get = $link->prepare("SELECT ActivityID, SongID, Type, `Timestamp` FROM activity WHERE UserID=? LIMIT 20");
 	$get->bind_param("i", $userid);
 	$get->execute();
 
 	bindArray($get, $row);
 	while($get->fetch())
-		array_push($activity, $row);
+		$activity[] = array_flip(array_flip($row));
 
 	$get->close();
 
