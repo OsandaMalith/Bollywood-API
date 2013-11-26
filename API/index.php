@@ -25,6 +25,16 @@ $app->post('/user/login', function() {
 		message("failed");
 });
 
+$app->get("/user/:userid/activity", function($userid) {
+	echo json_encode(getUserActivity($userid));
+});
+
+$app->post("/user/:userid/activity", function($userid) {
+	global $app;
+	$activityData = json_decode($app->request->getBody(), true);
+	postActivityData($userid, $activityData);
+});
+
 $app->get("/albums/:albumid", function($albumid) {
 	global $app;
 	$app->etag('0000');
@@ -59,16 +69,6 @@ $app->get("/search/songs/:name", function($name) {
 	global $app;
 	$app->etag('0000');
 	echo json_encode(searchSongName($name));
-});
-
-$app->get("/activity", function() {
-	echo json_encode(getUserActivity());
-});
-
-$app->post("/activity", function() {
-	global $app;
-	$activityData = json_decode($app->request->getBody(), true);
-	postActivityData($activityData);
 });
 
 /*

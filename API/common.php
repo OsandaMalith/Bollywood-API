@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("users.php");
 require_once("albums.php");
 require_once("songs.php");

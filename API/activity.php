@@ -2,11 +2,9 @@
 require_once("common.php");
 
 
-function postActivityData($data)
+function postActivityData($userid, $data)
 {
 	global $link;
-
-	$userid = $_SESSION["userid"];
 
 	foreach($data as $activity)
 	{
@@ -17,11 +15,9 @@ function postActivityData($data)
 	}
 }
 
-function getUserActivity()
+function getUserActivity($userid)
 {
 	global $link;
-
-	$userid = $_SESSION["userid"];
 
 	$activity = array();
 

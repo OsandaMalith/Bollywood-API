@@ -15,8 +15,6 @@ function createNewUser()
 
 	$id = $link->insert_id;
 
-	$_SESSION["userid"] = $id;
-
 	createEmptyPlaylist();
 
 	$response = array('UserID'=>$id, 'Password'=>$password);
@@ -34,10 +32,7 @@ function login($userid, $password)
 	$login->store_result();
 
 	if ($login->num_rows == 1)
-	{
 		$success = true;
-		$_SESSION["userid"] = $userid;
-	}
 	else
 		$success = false;	
 

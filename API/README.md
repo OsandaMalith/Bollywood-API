@@ -82,7 +82,7 @@
 {"message":"success"}
 ```
 
-#### GET /activity
+#### GET /user/{userid}/activity
 ###### Response
  ```javascript
 [
@@ -102,7 +102,7 @@
 ]
  ```
 
-#### POST /activity
+#### POST /user/{userid}/activity
 ###### Required Body
  ```javascript
  [
