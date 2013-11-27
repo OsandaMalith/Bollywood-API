@@ -40,7 +40,7 @@ function getSongsFromAlbum($albumid)
 
 	bindArray($songs, $row);
 	while($songs->fetch())
-		array_push($response, $row);
+		array_push($response, arrayCopy($row));
 
 	$songs->close();
 

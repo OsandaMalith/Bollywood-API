@@ -25,4 +25,9 @@ function bindArray($stmt, &$row)
 }
 /**--------**/
 
+function arrayCopy($arr)
+{
+	return array_flip(array_flip($arr));
+}
+
 ?>

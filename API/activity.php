@@ -27,7 +27,7 @@ function getUserActivity($userid)
 
 	bindArray($get, $row);
 	while($get->fetch())
-		$activity[] = array_flip(array_flip($row));
+		$activity[] = arrayCopy($row);
 
 	$get->close();
 
