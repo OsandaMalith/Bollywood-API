@@ -67,8 +67,7 @@
 ###### Response
  ```javascript
 {
-  "UserID": 14,
-  "Password": "UnsecurePassword"
+  "UserID": 14
 }
 ```
 

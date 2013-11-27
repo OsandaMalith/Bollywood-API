@@ -17,7 +17,7 @@ function createNewUser()
 
 	createEmptyPlaylist();
 
-	$response = array('UserID'=>$id, 'Password'=>$password);
+	$response = array('UserID'=>$id);
 
 	return $response;
 }
