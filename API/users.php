@@ -15,7 +15,7 @@ function createNewUser()
 
 	$id = $link->insert_id;
 
-	createEmptyPlaylist();
+	createEmptyPlaylist($id);
 
 	$response = array('UserID'=>$id);
 

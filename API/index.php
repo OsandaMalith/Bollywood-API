@@ -27,37 +27,37 @@ $app->post("/user/:userid/activity", function($userid) {
 
 $app->get("/albums/:albumid", function($albumid) {
 	global $app;
-	$app->etag('0000');
+	//$app->etag('0000');
 	echo json_encode(getAlbum($albumid));
 });
 
 $app->get("/albums/:albumid/songs", function($albumid) {
 	global $app;
-	$app->etag('0000');
+	//$app->etag('0000');
 	echo json_encode(getAlbumWithSongs($albumid));
 });
 
 $app->get("/songs/:songid", function($songid) {
 	global $app;
-	$app->etag('0000');
+	//$app->etag('0000');
 	echo json_encode(getSong($songid));
 });
 
 $app->get("/songs/:songid/album", function($songid) {
 	global $app;
-	$app->etag('0000');
+	//$app->etag('0000');
 	echo json_encode(getSongWithAlbum($songid));
 });
 
 $app->get("/search/albums/:name", function($name) {
 	global $app;
-	$app->etag('0000');
+	//$app->etag('0000');
 	echo json_encode(searchAlbumName($name));
 });
 
 $app->get("/search/songs/:name", function($name) {
 	global $app;
-	$app->etag('0000');
+	//$app->etag('0000');
 	echo json_encode(searchSongName($name));
 });
 
@@ -83,7 +83,7 @@ $app->post('/user/login', function() {
 });
 */
 
-//sleep((mt_rand()%5) + 1);
+sleep((mt_rand()%3) + 1);
 
 $app->run();
 

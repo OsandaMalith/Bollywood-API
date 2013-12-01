@@ -15,6 +15,14 @@ function getAlbum($albumid)
 
 	$album->close();
 
+	if ($row["Cast"] != "")
+		$row["Cast"] = json_decode($row["Cast"]);
+	
+	if ($row["MusicDirector"] != "")
+		$row["MusicDirector"] = json_decode($row["MusicDirector"]);
+
+	$row["AlbumArt"] = "http://localhost/148.jpg";
+
 	return $row;
 }
 

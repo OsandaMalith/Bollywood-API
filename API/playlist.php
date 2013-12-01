@@ -2,11 +2,9 @@
 require_once("common.php");
 
 
-function createEmptyPlaylist()
+function createEmptyPlaylist($userid)
 {
 	global $link;
-
-	$userid = $_SESSION["userid"];
 
 	$emptyArray = "[]";
 	$playlist = $link->prepare("INSERT INTO playlists (UserID, SongIDs) VALUES (?,?)");

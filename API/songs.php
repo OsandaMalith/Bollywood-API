@@ -15,6 +15,11 @@ function getSong($songid)
 
 	$album->close();
 
+	if ($row["Singers"] != "")
+		$row["Singers"] = json_decode($row["Singers"]);
+
+	$row["Mp3"] = "http://localhost/jo_bhi_main.mp3";
+
 	return $row;
 }
 
@@ -34,14 +39,16 @@ function getSongsFromAlbum($albumid)
 	$response = array();
 	global $link;
 
-	$songs = $link->prepare("SELECT * FROM songs WHERE AlbumID=?");
+	$songs = $link->prepare("SELECT SongID FROM songs WHERE AlbumID=?");
 	$songs->bind_param("i", $albumid);
 	$songs->execute();
+	$songs->store_result();
 
 	bindArray($songs, $row);
 	while($songs->fetch())
-		array_push($response, arrayCopy($row));
+		array_push($response, getSong($row["SongID"]));
 
+	$songs->free_result();
 	$songs->close();
 
 	return $response;
