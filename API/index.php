@@ -22,7 +22,7 @@ $app->get("/user/:userid/activity", function($userid) {
 $app->post("/user/:userid/activity", function($userid) {
 	global $app;
 	$activityData = json_decode($app->request->getBody(), true);
-	postActivityData($userid, $activityData);
+	postActivityData($userid, $activityData["data"]);
 });
 
 $app->get("/albums/:albumid", function($albumid) {
@@ -83,7 +83,7 @@ $app->post('/user/login', function() {
 });
 */
 
-sleep((mt_rand()%3) + 1);
+//sleep((mt_rand()%3) + 1);
 
 $app->run();
 
