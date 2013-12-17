@@ -18,7 +18,7 @@ function getSong($songid)
 	if ($row["Singers"] != "")
 		$row["Singers"] = json_decode($row["Singers"]);
 
-	$row["Mp3"] = "http://localhost/jo_bhi_main.mp3";
+	$row["Mp3"] = "http://169.254.176.193/jo_bhi_main.mp3?r=".time();
 
 	return $row;
 }
@@ -62,8 +62,8 @@ function searchSongName($name)
 
 	$name = $name."%";
 	
-	$search = $link->prepare("SELECT SongID FROM songs WHERE Name LIKE ? OR Name SOUNDS LIKE ? ORDER BY Likes DESC LIMIT 15");
-	$search->bind_param("ss", $name, $name);
+	$search = $link->prepare("SELECT SongID FROM songs WHERE Name LIKE ? ORDER BY Likes DESC LIMIT 15");
+	$search->bind_param("s", $name);
 	$search->execute();
 	$search->store_result();
 

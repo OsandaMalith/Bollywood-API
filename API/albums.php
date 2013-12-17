@@ -21,8 +21,6 @@ function getAlbum($albumid)
 	if ($row["MusicDirector"] != "")
 		$row["MusicDirector"] = json_decode($row["MusicDirector"]);
 
-	$row["AlbumArt"] = "http://localhost/148.jpg";
-
 	return $row;
 }
 
@@ -45,8 +43,8 @@ function searchAlbumName($name)
 
 	$name = $name."%";
 	
-	$search = $link->prepare("SELECT AlbumID FROM albums WHERE Name LIKE ? OR Name SOUNDS LIKE ? ORDER BY Year DESC LIMIT 10");
-	$search->bind_param("ss", $name, $name);
+	$search = $link->prepare("SELECT AlbumID FROM albums WHERE Name LIKE ? ORDER BY Year DESC LIMIT 10");
+	$search->bind_param("s", $name);
 	$search->execute();
 	$search->store_result();
 

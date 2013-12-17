@@ -61,6 +61,10 @@ $app->get("/search/songs/:name", function($name) {
 	echo json_encode(searchSongName($name));
 });
 
+$app->get("/explore/latest", function() {	
+	echo json_encode(getLatest());
+});
+
 /*
 $app->get("/playlist", function() {
 	echo json_encode(getPlaylist());
