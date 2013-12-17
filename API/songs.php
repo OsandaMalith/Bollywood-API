@@ -18,8 +18,6 @@ function getSong($songid)
 	if ($row["Singers"] != "")
 		$row["Singers"] = json_decode($row["Singers"]);
 
-	$row["Mp3"] = "http://169.254.176.193/jo_bhi_main.mp3?r=".time();
-
 	return $row;
 }
 
