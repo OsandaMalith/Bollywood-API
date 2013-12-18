@@ -6,7 +6,7 @@ var albums = [];
 
 function start()
 {
-	for (var i=0;i<1;i++)
+	for (var i=0;i<26;i++)
 	{
 		var browseUrl = browseBaseUrl + String.fromCharCode(i + 97);
 		getAlbumsHtml(browseUrl);
