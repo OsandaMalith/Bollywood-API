@@ -1,12 +1,12 @@
-var category = "pop";
+var category = "";
 var dUrl = "http://www.dhingana.com";
-var browseBaseUrl = "http://www.dhingana.com/hindi/pop/songs-albums-browse-";
+var browseBaseUrl = "http://m.dhingana.com/xhr/getNextSectionPage?genre=Hindi&type=all&start=0&count=10000&section=";
 
 var albums = [];
 
 function start()
 {
-	for (var i=0;i<26;i++)
+	for (var i=0;i<1;i++)
 	{
 		var browseUrl = browseBaseUrl + String.fromCharCode(i + 97);
 		getAlbumsHtml(browseUrl);
@@ -40,7 +40,8 @@ function getAlbumsHtml(browseUrl)
 		async: false,
 		data: {
 			fName: "getHtml",
-			url: browseUrl
+			url: browseUrl,
+			isMobile: "YES"
 		},
 		success: function(data)
 		{
@@ -50,7 +51,30 @@ function getAlbumsHtml(browseUrl)
 }
 
 function parseAlbums(html)
-{
+{	
+	var json = $.parseJSON(html);
+
+	for (var i=0;i<json.length;i++)
+	{
+		album = {
+			name: json[i].apiData.Name,
+			url: dUrl + json[i].apiData.Path,
+			albumArt: "",
+			cast: [],
+			year: 0,
+			musicDirector: [],
+			songs: [],
+			category: category
+		};
+		
+		if (isUniqueAlbum(album))
+		{
+			//console.log("Adding " + album.name);
+			albums.push(album);
+		}
+	}
+
+	/*
 	$(html).find("#allSongsList li").each(function() {
 		album = {
 			name: $(this).text(),
@@ -69,8 +93,10 @@ function parseAlbums(html)
 			albums.push(album);
 		}
 	});
-	
+	*/
+
 	getSingleHtml();
+	
 }
 
 function isUniqueAlbum(album)
