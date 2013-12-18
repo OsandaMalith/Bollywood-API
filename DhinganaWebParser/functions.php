@@ -13,26 +13,34 @@ call_user_func($fname);
 $link->close();
 
 function getHtml()
-{
-	$url = $_GET['url'];
+{	
+	try
+	{
+		$url = $_GET['url'];
 
-	$desktop = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36";
-	$mobile = "User-Agent: Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7";
+		$desktop = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36";
+		$mobile = "User-Agent: Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7";
 
-	$isMobile = (isset($_GET["isMobile"]) && $_GET["isMobile"] == "YES");
+		$isMobile = (isset($_GET["isMobile"]) && $_GET["isMobile"] == "YES");
 
-	$opts = array( 
-	    'http' => array ( 
-	        'method'=>'GET', 
-	        'proxy'=>'127.0.0.1:9996', 
-	        'request_fulluri' => true,
-	        'header' =>  ($isMobile) ? $mobile : $desktop
-	    )
-	); 
-	$ctx = stream_context_create($opts); 
-	$content = file_get_contents("$url",false,$ctx); 
+		$opts = array( 
+		    'http' => array ( 
+		        'method'=>'GET', 
+		        'proxy'=>'127.0.0.1:9996', 
+		        'request_fulluri' => true,
+		        'header' =>  ($isMobile) ? $mobile : $desktop
+		    )
+		); 
+		$ctx = stream_context_create($opts); 
+		$content = file_get_contents("$url",false,$ctx); 
 
-	echo $content; 
+		echo $content; 
+	}
+	catch(Exception $e)
+	{
+	}
+
+	
 }
 
 function doesExist($url)
