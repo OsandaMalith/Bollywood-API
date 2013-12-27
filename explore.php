@@ -4,9 +4,11 @@ require_once("common.php");
 
 function getExploreAll()
 {
+	
+	$titles = array("Latest", "Popular", "Old", Pop", "Random");
         $all = array("Latest" => getLatest(), "Popular" => getPopular(), "Old" => getOld(), "Pop" => getPop(), "Random" => getRandom());
         
-        return $all;    
+        return array("Titles" => $titles, "Albums" => $all);    
 }
 
 function getLatest()
