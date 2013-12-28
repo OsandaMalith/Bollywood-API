@@ -6,7 +6,7 @@ function getSong($songid)
 {
 	global $link;
 
-	$album = $link->prepare("SELECT * FROM songs WHERE SongID=?");
+	$album = $link->prepare("SELECT SongID,AlbumID,Name,Singers,Mp3 FROM songs WHERE SongID=?");
 	$album->bind_param("i", $songid);
 	$album->execute();
 
@@ -60,7 +60,7 @@ function searchSongName($name)
 
 	$name = $name."%";
 	
-	$search = $link->prepare("SELECT SongID FROM songs WHERE Name LIKE ? ORDER BY Likes DESC LIMIT 15");
+	$search = $link->prepare("SELECT SongID FROM songs WHERE Name LIKE ? LIMIT 15");
 	$search->bind_param("s", $name);
 	$search->execute();
 	$search->store_result();

@@ -7,7 +7,7 @@ require_once("activity.php");
 require_once("explore.php");
 
 $link= new mysqli("127.0.0.1", "root", "root");
-$link->select_db("music");
+$link->select_db("songspk");
 
 function message($str)
 {

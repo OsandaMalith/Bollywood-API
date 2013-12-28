@@ -23,15 +23,9 @@
 {
   SongID: 10,
   AlbumID: 1,
-  DhinganaID: 543424,
   Name: "Tera Mujhse - Kishore",
   Singers: "["Kishore Kumar"]",
-  Size: 2715968,
-  Duration: 339383,
   Mp3: "http://echpmd.dhstatic.net/media/54dc8a61/hindi-oldies/aa_gale_lag_ja/tera_mujhse___kishore.mp3",
-  Likes: 36,
-  Dislikes: 0,
-  Favorites: 0,
   *Album: {
     Album object
   }
