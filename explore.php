@@ -13,7 +13,7 @@ function getExploreAll()
 
 function getLatest()
 {
-        $latestAlbumIDs = array(2476, 2513, 2842, 4667, 4396, 2240, 4679, 4588, 893, 2826, 9856);
+        $latestAlbumIDs = array(1068, 1756, 2922);
         
         $latestAlbums = array();
         foreach($latestAlbumIDs as $albumid)
