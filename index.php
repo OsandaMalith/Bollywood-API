@@ -52,13 +52,23 @@ $app->get("/songs/:songid/album", function($songid) {
 $app->get("/search/albums/:name", function($name) {
 	global $app;
 	//$app->etag('0000');
-	echo json_encode(searchAlbumName($name));
+	echo json_encode(searchAlbumNameInAll($name, true));
+});
+
+$app->get("/search/like/albums/:name", function($name) {
+	echo json_encode(searchAlbumNameInAll($name, false));
 });
 
 $app->get("/search/songs/:name", function($name) {
 	global $app;
 	//$app->etag('0000');
-	echo json_encode(searchSongName($name));
+	echo json_encode(searchSongNameInAll($name, true));
+});
+
+$app->get("/search/like/songs/:name", function($name) {
+	global $app;
+	//$app->etag('0000');
+	echo json_encode(searchSongNameInAll($name, false));
 });
 
 $app->get("/explore", function() {	
