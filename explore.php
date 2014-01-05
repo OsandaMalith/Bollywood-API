@@ -5,40 +5,23 @@ require_once("common.php");
 function getExploreAll()
 {
 	
-	$titles = array("Latest", "Popular", "Old", "Pop", "Random");
-        $all = array("Latest" => getLatest(), "Popular" => getPopular(), "Old" => getOld(), "Pop" => getPop(), "Random" => getRandom());
+	$titles = array("Latest", "Popular", "Old", "Random");
+        $latest = array(3023, 979, 1172, 2825, 102, 2922, 2394);
+	$popular = array();
+	$old = array();
+	$random = array();       
+
+	$all = array("Latest" => albumsForExplore($latest), "Popular" => albumsForExplore($popular), "Old" => albumsForExplore($old),"Random" => albumsForExplore($random));
         
         return array("Titles" => $titles, "Albums" => $all);    
 }
 
-function getLatest()
+function albumsForExplore($ids)
 {
-        $latestAlbumIDs = array(1068, 1756, 2922);
-        
-        $latestAlbums = array();
-        foreach($latestAlbumIDs as $albumid)
-                array_push($latestAlbums, getAlbumWithSongs($albumid));
-        
-        return $latestAlbums;
+	$albums=array();
+	foreach ($ids as $id)
+		array_push($albums, getAlbumWithSongs($id, "songspk"));
+	return $albums;
 }
 
-function getPopular()
-{
-        return getLatest();
-}
-
-function getOld()
-{
-        return getLatest();
-}
-
-function getPop()
-{
-        return getLatest();
-}
-
-function getRandom()
-{
-        return getLatest();
-}
 ?>
