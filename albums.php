@@ -2,7 +2,7 @@
 require_once("common.php");
 
 
-function getAlbum($albumid, $table = "songspk")
+function getAlbum($albumid, $table)
 {
 	global $link;
 
@@ -78,13 +78,15 @@ function getMappedData($album)
 	return $album;
 }
 
-function getAlbumWithSongs($albumid, $table = "songspk")
+function getAlbumWithSongs($albumid, $table)
 {
 	global $link;
 
 	$album = getAlbum ($albumid, $table);
-
-	$album["Songs"] = getSongsFromAlbum($albumid, $table);
+	if ($album["Provider"] == "dhingana")
+		$album["Songs"] = getSongsFromAlbum($album["AlbumID"], "dhingana");
+	else
+		$album["Songs"] = getSongsFromAlbum($albumid, "songspk");
 
 	return $album;
 }
@@ -92,13 +94,13 @@ function getAlbumWithSongs($albumid, $table = "songspk")
 function searchAlbumNameInAll($name, $isFinal)
 {
 	$pk = searchAlbumName($name, $isFinal, "songspk");
-	if (count($pk) == 0)
-		return searchAlbumName($name, $isFinal, "dhingana");
-	else
-		return $pk;
+	$dhingana = searchAlbumName($name, $isFinal, "dhingana");
+	
+	$all = array_merge($pk, $dhingana);
+	return array_unique($all, SORT_REGULAR);
 }
 
-function searchAlbumName($name, $isFinal, $table = "songspk")
+function searchAlbumName($name, $isFinal, $table)
 {
 	global $link;
 	
