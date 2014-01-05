@@ -4,13 +4,13 @@
 ```javascript
 {
   AlbumID: 10,
-  URL: "http://www.dhingana.com/hindi/aadmi-songs-dilip-kumar-waheeda-rehman-oldies-30f4bd1",
-  AlbumArt: "http://ecs3cdn.dhstatic.net/images/small_148/aadmi-25390767151fa064f78edb2.49249312.Jpg",
-  Category: "oldies",
-  Name: "Aadmi",
-  Cast: "["Dilip Kumar","Waheeda Rehman","Manoj Kumar","Simi Garewal","Pran","Sulochana","Agha","Ulhas"]",
-  MusicDirector: "["Naushad"]",
-  Year: 1968,
+  Name: "Dhoom",
+  AlbumArtBig: "http://c.saavncdn.com/YRM-CD-90002-150x150.jpg",
+  AlbumArtSmall: "http://c.saavncdn.com/YRM-CD-90002-500x500.jpg",
+  Cast: ["Abhishek Bachchan","John Abraham","Uday Chopra","Esha Deol","Rimi Sen"],
+  MusicDirector: "["Pritam"]",
+  Year: 2004,
+  Provider: "saavn",
   *Songs: [
     Array of Song objects
   ]
@@ -26,6 +26,7 @@
   Name: "Tera Mujhse - Kishore",
   Singers: "["Kishore Kumar"]",
   Mp3: "http://echpmd.dhstatic.net/media/54dc8a61/hindi-oldies/aa_gale_lag_ja/tera_mujhse___kishore.mp3",
+  Provider: "dhingana",
   *Album: {
     Album object
   }
@@ -40,6 +41,13 @@
 #### GET /search/songs/{song name}
   Array of song objects with album
 
+
+#### GET /search/like/albums/{album name}
+  Array of album objects with name starting from. Has song array
+
+
+#### GET /search/like/songs/{song name}
+  Array of song objects with name starting from. Has album object
 
 
 #### GET /albums/{id}
@@ -72,16 +80,11 @@
   {
     "ActivityID": 1,
     "SongID": 1,
-    "Type": "listen",
+    "Action": "AddedToPlaylist",
+    "Extra": "Search, songspk",
     "Timestamp": 1385127344
   },
   ...
-  {
-    "ActivityID": 3,
-    "SongID": 20,
-    "Type": "skip",
-    "Timestamp": 1385127314
-  }
 ]
  ```
 
@@ -91,14 +94,10 @@
  [
     {
         "SongID": 2,
-        "Type": "listen",
-        "Timestamp": 1385127352
+        "Action": "AddedToPlaylist",
+        "Timestamp": 1385127352,
+        "Extra": "Explore, dhingana"
     },
     ...
-    {
-        "SongID": 20,
-        "Type": "skip",
-        "Timestamp": 1385127314
-    }
 ]
 ```
