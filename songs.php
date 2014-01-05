@@ -2,7 +2,7 @@
 require_once("common.php");
 
 
-function getSong($songid, $table = "songspk")
+function getSong($songid, $table)
 {
 	global $link;
 
@@ -23,7 +23,7 @@ function getSong($songid, $table = "songspk")
 	return $row;
 }
 
-function getSongWithAlbum($songid, $table = "songspk")
+function getSongWithAlbum($songid, $table)
 {
 	global $link;
 
@@ -34,7 +34,7 @@ function getSongWithAlbum($songid, $table = "songspk")
 	return $song;
 }
 
-function getSongsFromAlbum($albumid, $table = "songspk")
+function getSongsFromAlbum($albumid, $table)
 {
 	$response = array();
 	global $link;
@@ -63,7 +63,7 @@ function searchSongNameInAll($name, $isFinal)
 		return $pk;
 }
 
-function searchSongName($name, $isFinal, $table = "songspk")
+function searchSongName($name, $isFinal, $table)
 {
 	global $link;
 
