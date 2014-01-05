@@ -26,32 +26,22 @@ $app->post("/user/:userid/activity", function($userid) {
 });
 
 $app->get("/albums/:albumid", function($albumid) {
-	global $app;
-	//$app->etag('0000');
 	echo json_encode(getAlbum($albumid));
 });
 
 $app->get("/albums/:albumid/songs", function($albumid) {
-	global $app;
-	//$app->etag('0000');
 	echo json_encode(getAlbumWithSongs($albumid));
 });
 
 $app->get("/songs/:songid", function($songid) {
-	global $app;
-	//$app->etag('0000');
 	echo json_encode(getSong($songid));
 });
 
 $app->get("/songs/:songid/album", function($songid) {
-	global $app;
-	//$app->etag('0000');
 	echo json_encode(getSongWithAlbum($songid));
 });
 
 $app->get("/search/albums/:name", function($name) {
-	global $app;
-	//$app->etag('0000');
 	echo json_encode(searchAlbumNameInAll($name, true));
 });
 
@@ -60,14 +50,10 @@ $app->get("/search/like/albums/:name", function($name) {
 });
 
 $app->get("/search/songs/:name", function($name) {
-	global $app;
-	//$app->etag('0000');
 	echo json_encode(searchSongNameInAll($name, true));
 });
 
 $app->get("/search/like/songs/:name", function($name) {
-	global $app;
-	//$app->etag('0000');
 	echo json_encode(searchSongNameInAll($name, false));
 });
 
