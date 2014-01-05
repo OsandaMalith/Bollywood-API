@@ -96,8 +96,11 @@ function searchAlbumNameInAll($name, $isFinal)
 	$pk = searchAlbumName($name, $isFinal, "songspk");
 	$dhingana = searchAlbumName($name, $isFinal, "dhingana");
 	
-	$all = array_merge($pk, $dhingana);
-	return array_unique($all, SORT_REGULAR);
+	$all = array_unique(array_merge($pk, $dhingana), SORT_REGULAR);
+	$toReturn = array();
+	foreach($all as $album)
+		array_push($toReturn, $album);
+	return $toReturn;	
 }
 
 function searchAlbumName($name, $isFinal, $table)
