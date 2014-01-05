@@ -55,7 +55,7 @@ function getMappedData($album)
 {
 	global $link;
 
-	$map = $link->prepare("SELECT SaavnID FROM map WHERE PKID=?");
+	$map = $link->prepare("SELECT DhinganaID,SaavnID FROM map WHERE PKID=?");
 	$map->bind_param("i", $album["AlbumID"]);
 	$map->execute();
 	$map->store_result();
@@ -66,19 +66,16 @@ function getMappedData($album)
 	}
 	bindArray($map, $row);
 	$map->fetch();
+	$dhinganaid = $row["DhinganaID"];
 	$saavnid = $row["SaavnID"];
 	$map->close();
-
-	$newalbum = getAlbum($saavnid, "saavn");
-	$album["Name"] = $newalbum["Name"];
-	$album["Cast"] = $newalbum["Cast"];
-	$album["Year"] = $newalbum["Year"];
-	$album["MusicDirector"] = $newalbum["MusicDirector"];
-	$album["AlbumArt"] = $newalbum["AlbumArtSmall"];
-	$album["Provider"] = "saavn";
-	$album = setAlbumArt($album, "saavn");
-
-	return $album;	
+	
+	if ($dhinganaid != -1)
+		$album = getAlbum($dhinganaid, "dhingana");
+	else if($saavnid != -1)
+		$album = getAlbum($saavnid, "saavn");
+	
+	return $album;
 }
 
 function getAlbumWithSongs($albumid, $table = "songspk")
@@ -126,8 +123,10 @@ function searchAlbumName($name, $isFinal, $table = "songspk")
 
 	bindArray($search, $row);
 	while($search->fetch())
-		array_push($albums, getAlbumWithSongs($row["AlbumID"], $table));
-
+	{
+		$album = getAlbumWithSongs($row["AlbumID"], $table);
+		array_push($albums, $album);
+	}
 	$search->free_result();
 	$search->close();
 
