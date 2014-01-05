@@ -43,7 +43,7 @@ function setAlbumArt($album, $table)
 	else if($table == "saavn")
 	{
 		$album["AlbumArtBig"] = str_replace("150", "500", $album["AlbumArt"]);
-		$album["AlbumArtSmall"] = str_replace("150", "500", $album["AlbumArt"]);
+		//$album["AlbumArtSmall"] = str_replace("150", "500", $album["AlbumArt"]);
 	}
 
 	unset($album["AlbumArt"]);
