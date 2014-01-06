@@ -6,6 +6,12 @@ function postActivityData($userid, $data)
 {
         global $link;
 
+	if (login($userid) == false)
+	{
+		message("Failed");
+		return;
+	}
+
         foreach($data as $activity)
         {
                 $put = $link->prepare("INSERT INTO activity (UserID, SongID, Action, `Timestamp`, Extra) VALUES (?,?,?,?,?)");
