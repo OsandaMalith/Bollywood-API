@@ -22,7 +22,7 @@ function createNewUser()
 	return $response;
 }
 
-function login($userid, $password)
+function login($userid, $password = "Unsecure Password")
 {
 	global $link;
 
