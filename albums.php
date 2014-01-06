@@ -85,7 +85,7 @@ function getAlbumWithSongs($albumid, $table)
 	$album = getAlbum ($albumid, $table);
 	if ($album["Provider"] == "dhingana")
 		$album["Songs"] = getSongsFromAlbum($album["AlbumID"], "dhingana");
-	else
+	if ($album["Provider"] == "saavn" || $album["Provider"] == "songspk" || count($album["Songs"]) == 0)
 		$album["Songs"] = getSongsFromAlbum($albumid, "songspk");
 
 	return $album;
