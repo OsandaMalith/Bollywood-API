@@ -14,7 +14,7 @@ function createDeveloper($email)
 	$devID = hash("crc32", $email);
 	$privateKey = hash("md5", $email.time().generateRandomString());
 
-	$insert = $link->prepare("INSERT INTO developers (DeveloperID, PrivateKey, Email) VALUES (?,?,?)");
+	$insert = $link->prepare("INSERT INTO developers (DeveloperID, PrivateKey, Email, AccessLevel) VALUES (?,?,?,0)");
 	$insert->bind_param("sss", $devID, $privateKey, $email);
 	$insert->execute();
 	$insert->close();
@@ -68,7 +68,7 @@ function getPrivateKey($developerID)
 
 function validateRequest($developerID, $timestamp, $user_hmac)
 {
-	if (time() - $timestamp > 3000)
+	if (time() - $timestamp > 30)
 	{
 		message("Request is too old");
 		return false;
