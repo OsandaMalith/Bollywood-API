@@ -1,6 +1,7 @@
 <?php
 require_once("albums.php");
 require_once("songs.php");
+require_once("auth.php");
 
 $link= new mysqli("127.0.0.1", "root", "root");
 $link->select_db("music");
