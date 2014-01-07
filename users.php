@@ -22,7 +22,7 @@ function createNewUser()
 	return $response;
 }
 
-function login($userid, $password = "Unsecure Password")
+function login($userid, $password = "UnsecurePassword")
 {
 	global $link;
 
@@ -30,7 +30,7 @@ function login($userid, $password = "Unsecure Password")
 	$login->bind_param("is", $userid, $password);
 	$login->execute();
 	$login->store_result();
-
+	
 	if ($login->num_rows == 1)
 		$success = true;
 	else
