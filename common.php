@@ -23,6 +23,17 @@ function bindArray($stmt, &$row)
 }
 /**--------**/
 
+/**http://stackoverflow.com/questions/4356289/php-random-string-generator**/
+function generateRandomString($length = 25) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./?><;:"|}{[]+-_=~`';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
+}
+/**--------**/
+
 function arrayCopy($arr)
 {
 	return array_flip(array_flip($arr));
