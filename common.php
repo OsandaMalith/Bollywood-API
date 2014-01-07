@@ -1,10 +1,6 @@
 <?php
-require_once("users.php");
 require_once("albums.php");
 require_once("songs.php");
-require_once("playlist.php");
-require_once("activity.php");
-require_once("explore.php");
 
 $link= new mysqli("127.0.0.1", "root", "root");
 $link->select_db("music");
