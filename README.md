@@ -91,13 +91,15 @@
 #### POST /user/{userid}/activity
 ###### Required Body
  ```javascript
- [
-    {
-        "SongID": 2,
-        "Action": "AddedToPlaylist",
-        "Timestamp": 1385127352,
-        "Extra": "Explore, dhingana"
-    },
-    ...
-]
+{
+    "data": [
+        {
+            "SongID": 2,
+            "Action": "AddedToPlaylist",
+            "Timestamp": 1385127352,
+            "Extra": "Explore, dhingana"
+        },
+        ...
+    ]
+}
 ```
