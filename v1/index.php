@@ -11,19 +11,19 @@ $app->get('/', function () {
  	message("Hello World!"); 	
  });
 
-$app->get("/albums/:albumid", function($albumid) {
+$app->get("/album/:albumid", function($albumid) {
 	echo json_encode(getAlbum($albumid));
 });
 
-$app->get("/albums/:albumid/songs", function($albumid) {
+$app->get("/album/:albumid/songs", function($albumid) {
 	echo json_encode(getAlbumWithSongs($albumid));
 });
 
-$app->get("/songs/:songid", function($songid) {
+$app->get("/song/:songid", function($songid) {
 	echo json_encode(getSong($songid));
 });
 
-$app->get("/songs/:songid/album", function($songid) {
+$app->get("/song/:songid/album", function($songid) {
 	echo json_encode(getSongWithAlbum($songid));
 });
 
