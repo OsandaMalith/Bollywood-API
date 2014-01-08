@@ -19,7 +19,7 @@
 	<div id="modal">
 		<div class="content">
 			<h2>Getting Started</h2>
-			<input type="text" id="txtEmail" onblur="textbox(this, 'Your Email Address')" onfocus="textbox(this, 'Your Email Address')" value="Your Email Address" class="bigtextbox signuptext" /><input onclick="signup()" type="button" value="Signup" class="nicebtn signupbtn" />
+			<input type="text" id="txtEmail" onblur="textbox(this, 'Your Email Address')" onfocus="textbox(this, 'Your Email Address')" id="btnSignup" value="Your Email Address" class="bigtextbox signuptext" /><input onclick="signup()" type="button" value="Signup" class="nicebtn signupbtn" />
 
 			<h2>What next?</h2>
 			<ol class="spaced-list">
@@ -79,7 +79,7 @@
 			<a name="tryit"></a>
 			<div class="content">
 				<h2>Try it!</h2>
-				<input type='text' id="txtSearch" onblur="textbox(this, 'Search for your favorite movie')" onfocus="textbox(this, 'Search for your favorite movie')" value="Search for your favorite movie" class="bigtextbox searchbox" /><input type="button" value="Search" onclick="search()" class="nicebtn searchbtn" />
+				<input type='text' id="txtSearch" onblur="textbox(this, 'Search for your favorite movie')" onfocus="textbox(this, 'Search for your favorite movie')" value="Search for your favorite movie" class="bigtextbox searchbox" /><input type="button" id="btnSearch" value="Search" onclick="search()" class="nicebtn searchbtn" />
 
 				<pre>
 					<code id="searchResults">

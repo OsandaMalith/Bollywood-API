@@ -26,6 +26,7 @@ function textbox(textbox, defaultVal)
 
 function signup()
 {
+	$("#btnSignup").val("Loading...");
 	$.ajax({
 		url: "v1/frontend_wrapper.php",
 		data: {
@@ -34,6 +35,7 @@ function signup()
 		},
 		success: function(data)
 		{
+			$("btnSignup").val("Signup");
 			notify($.parseJSON(data).message);
 		}
 	});
@@ -41,6 +43,7 @@ function signup()
 
 function search()
 {
+	$("#btnSearch").val("Loading..");
 	$.ajax({
 		url: "v1/frontend_wrapper.php",
 		data: {
@@ -51,6 +54,7 @@ function search()
 		{
 			$("#searchResults").text(JSON.stringify($.parseJSON(data), undefined, 4));
 			$("#searchResults").css("display", "block");
+			$("#btnSearch").val("Done!");
 		}
 	})
 }
