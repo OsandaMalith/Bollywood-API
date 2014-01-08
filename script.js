@@ -35,7 +35,7 @@ function signup()
 		},
 		success: function(data)
 		{
-			$("btnSignup").val("Signup");
+			$("btnSignup").val("Done!");
 			notify($.parseJSON(data).message);
 		}
 	});
@@ -54,7 +54,7 @@ function search()
 		{
 			$("#searchResults").text(JSON.stringify($.parseJSON(data), undefined, 4));
 			$("#searchResults").css("display", "block");
-			$("#btnSearch").val("Done!");
+			$("#btnSearch").val("Search");
 		}
 	})
 }

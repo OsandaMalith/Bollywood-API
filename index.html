@@ -52,6 +52,7 @@
 				<h3>Powerful RESTful APIs that allow you to retrieve all Bollywood-related information.</h3>
 				<input onclick="openModal()" type="button" value="Get Your Developer ID" class="trynow" />
 			</div>
+			<img src="iphone.gif" class="hero-img" />
 		</div>
 	</div>
 
@@ -146,6 +147,21 @@
 						<td>
 							<pre>
 								<code>
+{
+	AlbumID: "s_15724",
+	Name: "Rockstar",
+	Cast: [
+		"Ranbir Kapoor",
+		"Shammi Kapoor",
+		"Nargis Fakhri"
+	],
+	MusicDirector: [
+		"A.R. Rahman"
+	],
+	Year: 2011,
+	AlbumArtBig: "http://c.saavncdn.com/SFCD-1-1737-500x500.jpg",
+	AlbumArtSmall: "http://c.saavncdn.com/SFCD-1-1737-150x150.jpg"
+}
 								</code>
 							</pre>
 						</td>
@@ -168,25 +184,46 @@
 							<pre >
 								<code>
 {
-        "AlbumID": 3302,
-        "Name": "Kabhi Khushi Kabhie Gham",
-        "Cast": [
-            "Shahrukh Khan",
-            "Hrithik Roshan",
-            "Jaya Bachchan",
-            "Amitabh Bachchan",
-            "Kareena Kapoor",
-            "Kajol"
-        ],
-        "MusicDirector": [
-            "Sandesh Shandilya",
-            "Aadesh Shrivastava",
-            "Jatin Lalit"
-        ],
-        "Year": 2002,
-        "Provider": "dhingana",
-        "AlbumArtBig": "http://ecs3cdn.dhstatic.net/images/small_640/kabhi-khushi-kabhie-gham-995664386516b87bd9334c3.20484108.jpg",
-        "AlbumArtSmall": "http://ecs3cdn.dhstatic.net/images/small_300/kabhi-khushi-kabhie-gham-995664386516b87bd9334c3.20484108.jpg"
+	AlbumID: "s_15724",
+	Name: "Rockstar",
+	Cast: [
+		"Ranbir Kapoor",
+		"Shammi Kapoor",
+		"Nargis Fakhri"
+	],
+	MusicDirector: [
+		"A.R. Rahman"
+	],
+	Year: 2011,
+	AlbumArtBig: "http://c.saavncdn.com/SFCD-1-1737-500x500.jpg",
+	AlbumArtSmall: "http://c.saavncdn.com/SFCD-1-1737-150x150.jpg",
+	Songs: [
+		{
+			SongID: "p_12250",
+			AlbumID: "p_1770",
+			Name: "Phir Se Ud Chala",
+			Singers: [
+				"Mohit Chauhan"
+			]
+		},
+		{
+			SongID: "p_12251",
+			AlbumID: "p_1770",
+			Name: "Jo Bhi Main",
+			Singers: [
+				"Mohit Chauhan",
+				"Additional Vocal: Sapna Awasthi"
+			]
+		},
+		{
+			SongID: "p_12252",
+			AlbumID: "p_1770",
+			Name: "Katiya Karun",
+			Singers: [
+				"Harshdeep Kaur"
+			]
+		}
+	]
 }
 								</code>
 							</pre>
@@ -210,7 +247,14 @@
 						<td>
 							<pre class="language-javascript">
 								<code>
-									
+{
+	SongID: "p_12250",
+	AlbumID: "p_1770",
+	Name: "Phir Se Ud Chala",
+	Singers: [
+		"Mohit Chauhan"
+	]
+}
 								</code>
 							</pre>
 						</td>
@@ -233,7 +277,27 @@
 						<td>
 							<pre class="language-javascript">
 								<code>
-									
+{
+	SongID: "p_12250",
+	AlbumID: "p_1770",
+	Name: "Phir Se Ud Chala",
+	Singers: [
+		"Mohit Chauhan"
+	],
+	Album: {
+		AlbumID: "s_15724",
+		Name: "Rockstar",
+		Cast: [
+			"Ranbir Kapoor",
+			"Shammi Kapoor",
+			"Nargis Fakhri"
+		],
+		MusicDirector: "A.R. Rahman",
+		Year: 2011,
+		AlbumArtBig: "http://c.saavncdn.com/SFCD-1-1737-500x500.jpg",
+		AlbumArtSmall: "http://c.saavncdn.com/SFCD-1-1737-150x150.jpg"
+	}
+}
 								</code>
 							</pre>
 						</td>
@@ -253,13 +317,7 @@
 					</tr>
 					<tr class="describe">
 						<td class="type">Result</td>
-						<td>
-							<pre class="language-javascript">
-								<code>
-									
-								</code>
-							</pre>
-						</td>
+						<td>An array of albums with songs</td>
 					</tr>
 
 					<tr>
@@ -275,13 +333,7 @@
 					</tr>
 					<tr class="describe">
 						<td class="type">Result</td>
-						<td>
-							<pre class="language-javascript">
-								<code>
-									
-								</code>
-							</pre>
-						</td>
+						<td>An array of songs with album</td>
 					</tr>
 
 					<tr>
@@ -297,13 +349,7 @@
 					</tr>
 					<tr class="describe">
 						<td class="type">Result</td>
-						<td>
-							<pre class="language-javascript">
-								<code>
-									
-								</code>
-							</pre>
-						</td>
+						<td>An array of albums with songs</td>
 					</tr>
 
 					<tr>
@@ -319,13 +365,7 @@
 					</tr>
 					<tr class="describe">
 						<td class="type">Result</td>
-						<td>
-							<pre class="language-javascript">
-								<code>
-									
-								</code>
-							</pre>
-						</td>
+						<td>An array of songs with album</td>
 					</tr>
 				</table>
 			</div>
