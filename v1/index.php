@@ -4,6 +4,8 @@ require_once("common.php");
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
+$accessLevel = 0;
+
 $app = new \Slim\Slim();
 $app->response->headers->set('Content-Type', 'application/json');
 
