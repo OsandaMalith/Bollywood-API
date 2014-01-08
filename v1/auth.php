@@ -70,7 +70,8 @@ function getPrivateKey($developerID)
 
 function validateRequest($developerID, $timestamp, $user_hmac)
 {
-	if (time() - $timestamp > 30)
+	$timeDiff = time() - $timestamp;
+	if ($timeDiff > 30)
 	{
 		message("Request is too old");
 		return false;
