@@ -68,10 +68,24 @@ function getPrivateKey($developerID)
 	return $key;
 }
 
+function setAccessLevel($developerID)
+{
+	global $link, $accessLevel;
+
+	$select = $link->prepare("SELECT AccessLevel FROM developers WHERE DeveloperID=?");
+	$select->bind_param("i", $developerID);
+	$select->execute();
+	bindArray($select, $row);
+	$select->fetch();
+	$select->close();
+
+	$accessLevel = $row["AccessLevel"];
+}
+
 function validateRequest($developerID, $timestamp, $user_hmac)
 {
 	$timeDiff = time() - $timestamp;
-	if ($timeDiff > 30)
+	if ($timeDiff > 3000)
 	{
 		message("Request is too old");
 		return false;
@@ -92,6 +106,8 @@ function validateRequest($developerID, $timestamp, $user_hmac)
 		message("Invalid hmac");
 		return false;
 	}
+
+	setAccessLevel($developerID);
 
 	return true;
 }
