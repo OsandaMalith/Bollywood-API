@@ -4,18 +4,22 @@
 	<title>Bollywood API</title>
 
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://yandex.st/highlightjs/7.5/styles/default.min.css">
 	<link href="style.css" rel="stylesheet" type="text/css" />
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script type="text/javascript" src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
+	<script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
 	<script type="text/javascript" src="script.js"></script>
-	<script type="text/javascript">$.SyntaxHighlighter.init();</script>
+	<script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
+	<div id="notification">
+		This is a notification.
+	</div>
 	<div id="modal">
 		<div class="content">
 			<h2>Getting Started</h2>
-			<input type="text" onblur="textbox(this, 'Your Email Address')" onfocus="textbox(this, 'Your Email Address')" value="Your Email Address" class="bigtextbox signuptext" /><input type="button" value="Signup" class="nicebtn signupbtn" />
+			<input type="text" id="txtEmail" onblur="textbox(this, 'Your Email Address')" onfocus="textbox(this, 'Your Email Address')" value="Your Email Address" class="bigtextbox signuptext" /><input onclick="signup()" type="button" value="Signup" class="nicebtn signupbtn" />
 
 			<h2>What next?</h2>
 			<ol class="spaced-list">
@@ -75,7 +79,12 @@
 			<a name="tryit"></a>
 			<div class="content">
 				<h2>Try it!</h2>
-				<input type='text' onblur="textbox(this, 'Search for your favorite movie')" onfocus="textbox(this, 'Search for your favorite movie')" value="Search for your favorite movie" class="bigtextbox searchbox" /><input type="button" value="Search" class="nicebtn searchbtn" />
+				<input type='text' id="txtSearch" onblur="textbox(this, 'Search for your favorite movie')" onfocus="textbox(this, 'Search for your favorite movie')" value="Search for your favorite movie" class="bigtextbox searchbox" /><input type="button" value="Search" onclick="search()" class="nicebtn searchbtn" />
+
+				<pre>
+					<code id="searchResults">
+					</code>
+				</pre>
 			</div>
 		</div>
 
@@ -110,7 +119,7 @@
 				<p>For example, call hash_hmac("sha256", $timestamp, $privatekey) in PHP. Make sure that the timestamp is the same as the one that you are sending as a query string.</p>
 
 				<strong>An example request to get the data for an album:</strong>
-				<pre>albums/s_123?DeveloperID=456&amp;Timestamp=1389195200&amp;hmac=7d1fce595ce8f9a0a724c76ecba700420fca0031fd9dca1fdf3</pre>
+				<pre><code>albums/s_123?DeveloperID=456&amp;Timestamp=1389195200&amp;hmac=7d1fce595ce8f9a0a724c76ecba700420fca0031fd9dca1fdf3</code></pre>
 
 			</div>
 		</div>
@@ -135,8 +144,9 @@
 					<tr class="describe">
 						<td class="type">Result</td>
 						<td>
-							<pre class="language-javascript">
-
+							<pre>
+								<code>
+								</code>
 							</pre>
 						</td>
 					</tr>
@@ -155,8 +165,30 @@
 					<tr class="describe">
 						<td class="type">Result</td>
 						<td>
-							<pre class="language-javascript">
-
+							<pre >
+								<code>
+{
+        "AlbumID": 3302,
+        "Name": "Kabhi Khushi Kabhie Gham",
+        "Cast": [
+            "Shahrukh Khan",
+            "Hrithik Roshan",
+            "Jaya Bachchan",
+            "Amitabh Bachchan",
+            "Kareena Kapoor",
+            "Kajol"
+        ],
+        "MusicDirector": [
+            "Sandesh Shandilya",
+            "Aadesh Shrivastava",
+            "Jatin Lalit"
+        ],
+        "Year": 2002,
+        "Provider": "dhingana",
+        "AlbumArtBig": "http://ecs3cdn.dhstatic.net/images/small_640/kabhi-khushi-kabhie-gham-995664386516b87bd9334c3.20484108.jpg",
+        "AlbumArtSmall": "http://ecs3cdn.dhstatic.net/images/small_300/kabhi-khushi-kabhie-gham-995664386516b87bd9334c3.20484108.jpg"
+}
+								</code>
 							</pre>
 						</td>
 					</tr>
@@ -177,7 +209,9 @@
 						<td class="type">Result</td>
 						<td>
 							<pre class="language-javascript">
-
+								<code>
+									
+								</code>
 							</pre>
 						</td>
 					</tr>
@@ -198,7 +232,9 @@
 						<td class="type">Result</td>
 						<td>
 							<pre class="language-javascript">
-
+								<code>
+									
+								</code>
 							</pre>
 						</td>
 					</tr>
@@ -219,7 +255,9 @@
 						<td class="type">Result</td>
 						<td>
 							<pre class="language-javascript">
-
+								<code>
+									
+								</code>
 							</pre>
 						</td>
 					</tr>
@@ -239,7 +277,9 @@
 						<td class="type">Result</td>
 						<td>
 							<pre class="language-javascript">
-
+								<code>
+									
+								</code>
 							</pre>
 						</td>
 					</tr>
@@ -259,7 +299,9 @@
 						<td class="type">Result</td>
 						<td>
 							<pre class="language-javascript">
-
+								<code>
+									
+								</code>
 							</pre>
 						</td>
 					</tr>
@@ -279,7 +321,9 @@
 						<td class="type">Result</td>
 						<td>
 							<pre class="language-javascript">
-
+								<code>
+									
+								</code>
 							</pre>
 						</td>
 					</tr>

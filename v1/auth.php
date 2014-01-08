@@ -20,7 +20,9 @@ function createDeveloper($email)
 	$insert->close();
 	
 
-	echo $devID."    ".$privateKey;
+	sendMessage($email, "Bollywood API Credentials", "DeveloperID: $devID | PrivateKey: $privateKey");
+
+	message("Success. Check your email!");
 }
 
 function doesDeveloperExist($email)

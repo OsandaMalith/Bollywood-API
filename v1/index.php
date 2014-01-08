@@ -45,7 +45,7 @@ $app->get("/search/like/songs/:name", function($name) {
 
 $isValid = validateRequest($app->request->get("DeveloperID"), 
 				$app->request->get("Timestamp"), 
-				$app->request->get("Authentication"));
+				$app->request->headers->get("Authentication"));
 
 if ($isValid == true)
 	$app->run();

@@ -1,7 +1,6 @@
 <?php
 require_once("common.php");
 
-
 function getAlbum($albumid, $table)
 {
 	global $link;
