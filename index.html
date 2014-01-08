@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+<head>
+	<title>Bollywood API</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript">$.SyntaxHighlighter.init();</script>
+</head>
+<body>
+	<div id="modal">
+		<div class="content">
+			<h2>Getting Started</h2>
+			<input type="text" onblur="textbox(this, 'Your Email Address')" onfocus="textbox(this, 'Your Email Address')" value="Your Email Address" class="bigtextbox signuptext" /><input type="button" value="Signup" class="nicebtn signupbtn" />
+
+			<h2>What next?</h2>
+			<ol class="spaced-list">
+				<li>You'll recieve an email with your Developer ID and your Private Key</li>
+				<li>Don't share your Private Key with anyone (thus the name)</li>
+				<li>Have a look the endpoints and sample code</li>
+				<li>Start making your app!</li>
+			</ol>
+
+			<div class="modal-close">
+				<a onclick="closeModal()" href="">Close</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="header">
+		<ul id="links">
+			<li><a href="#tryit">Try It</a></li>
+			<li><a href="#howto">How To</a></li>
+			<li><a href="#apis">API Endpoints</a></li>
+		</ul>
+	</div>
+
+	<div id="hero">
+		<div class="grid">
+		</div>
+		<div class="content">
+			<div class="left">
+				<h1>Bollywood Data for Developers</h1>
+				<h3>Powerful RESTful APIs that allow you to retrieve all Bollywood-related information.</h3>
+				<input onclick="openModal()" type="button" value="Get Your Developer ID" class="trynow" />
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+
+		<div id="boxes" class="section">
+			<div class="box">
+				<h2>Free</h2>
+				<h3>Use As You Wish</h3>
+				<p>Sign Up for free and get unlimited requests.<p>
+			</div>
+			<div class="box">
+				<h2>{ }</h2>
+				<h3>JSON Ready Data</h3>
+				<p>Get all the results in easily parsable JSON format.</p>
+			</div>
+			<div class="box">
+				<h2>RESTful</h2>
+				<h3>Easily Accessible</h3>
+				<p>Retrieve information easily. Accessible from any platform.</p>
+			</div>		
+		</div>
+
+		<div id="testdrive" class="section">
+			<a name="tryit"></a>
+			<div class="content">
+				<h2>Try it!</h2>
+				<input type='text' onblur="textbox(this, 'Search for your favorite movie')" onfocus="textbox(this, 'Search for your favorite movie')" value="Search for your favorite movie" class="bigtextbox searchbox" /><input type="button" value="Search" class="nicebtn searchbtn" />
+			</div>
+		</div>
+
+		<div id="howto" class="section">
+			<a name="howto"></a>
+			<div class="content">
+				<h2>How to make a request?</h2>
+				<p>
+					To make a request, you have to follow these steps:
+				</p>
+				<ol class="spaced-list">
+					<li>Choose one of the endpoints</li>
+					<li>You'll need to add the following query strings to <strong>every</strong> request:</li>
+					<ul>
+						<li>DeveloperID</li>
+						<li>Timestamp</li>
+						<li>hmac</li>
+					</ul>
+					<li>You're now ready to make the request</li>
+				</ol>
+
+				<strong>What is a DeveloperID and how do I get it?</strong>
+				<p>A DeveloperID is used to identify you from the request. You will get one in an email when you signup.</p>
+
+				<strong>What is a Timestamp?</strong>
+				<p>A unix timestamp is the number of seconds since January 1, 1970. Most languages have an in-built function. For example, call time() in PHP.</p>
+
+				<strong>What is HMAC and how do I generate one?</strong>
+				<p>HMAC a digital signature that helps us make sure that you have made the request. You can generate one by encrypting the Timestamp using your <strong>Private Key</strong>. Use the SHA256 algorithm. You must generate one for each request.
+				</p>
+
+				<p>For example, call hash_hmac("sha256", $timestamp, $privatekey) in PHP. Make sure that the timestamp is the same as the one that you are sending as a query string.</p>
+
+				<strong>An example request to get the data for an album:</strong>
+				<pre>albums/s_123?DeveloperID=456&amp;Timestamp=1389195200&amp;hmac=7d1fce595ce8f9a0a724c76ecba700420fca0031fd9dca1fdf3</pre>
+
+			</div>
+		</div>
+
+		<div id="endpoints" class="section">
+			<a name="apis"></a>
+			<div class="content">
+				<h2>API Endpoints</h2>
+				<table>
+					
+					<tr>
+						<td colspan="2"><h4>/album/{album id}</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Gets the album for the given id</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><h4>/album/{album id}/songs</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Gets the album for the given id with an array of it's songs</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td colspan="2"><h4>/song/{song id}</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Gets the song for the given id</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td colspan="2"><h4>/song/{song id}/album</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Gets the song for the given id with it's album</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td colspan="2"><h4>/search/albums/{album name}</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Searches for albums similar to the provided name</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><h4>/search/songs/{song name}</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Searches for songs similar to the provided name</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><h4>/search/like/albums/{album name}</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Searches for albums starting with or similar to the provided name</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><h4>/search/like/songs/{song name}</h4></td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Description</td>
+						<td>Searches for songs starting with or similar to the provided name</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Method</td>
+						<td>GET</td>
+					</tr>
+					<tr class="describe">
+						<td class="type">Result</td>
+						<td>
+							<pre class="language-javascript">
+
+							</pre>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

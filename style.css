@@ -1,0 +1,282 @@
+body, html
+{
+	font-family: 'Open Sans', sans-serif !important;
+	padding: 0;
+	margin: 0;
+	color:#F2F2F2;
+}
+
+a
+{
+	color: #0757AD;
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
+h1
+{
+	font-size: 30pt;
+}
+
+h3
+{
+	font-size: 18pt;
+}
+
+#header
+{
+	min-height: 60px;
+	width:900px;
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+}
+
+#links
+{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	padding-top:15px;
+	right: 0;
+	position: absolute;
+}
+
+#links li
+{
+	display: inline-block;
+	margin-left: 30px;
+}
+
+#hero
+{
+	height:500px;
+	background-color: #CC4125;
+	-webkit-box-shadow: inset 0 0 10px #171717;
+	-moz-box-shadow: inset 0 0 10px #171717;
+	box-shadow: inset 0 0 10px #171717;
+	position: relative;
+	text-shadow: 1px 1px 1px #000;
+}
+
+#hero .grid
+{
+	background-image: url("grid.png");
+	width:100%;
+	height:100%;
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 0;
+}
+
+#hero .content
+{
+	width: 900px;
+	margin-left:auto;
+	margin-right:auto;
+	z-index: 1;
+	position: relative;
+}
+
+#hero .content .left
+{
+	width: 400px;
+	padding-top: 50px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.trynow
+{
+	background-color: #FFBB14;
+	border:none;
+	height: 55px;
+	width: 300px;
+	font-size: 14pt;
+	color: #171717;
+	box-shadow: 0px 0px 10px 3px #DEA314;
+	cursor: pointer;
+	outline: none;
+	margin-top: 20px;
+}
+
+#main
+{
+	width: 900px;
+	margin-left:auto;
+	margin-right:auto;
+	color: #CC4125;
+	text-shadow: none;
+}
+
+.section
+{
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #BDBDBD;
+	padding-bottom: 50px;
+	color: #3d3d3d;
+}
+
+.section h2
+{
+	color: #CC4125;
+}
+
+#boxes
+{
+}
+
+.box
+{
+	width: 297px;
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+}
+
+.box h2
+{
+	color: #0757AD;
+	font-size: 30pt;
+}
+
+.box h3
+{
+	padding-bottom: 10px;
+	margin :0;
+}
+
+.box p
+{
+	padding: 0;
+	margin: 0;
+	color: #3d3d3d;
+	font-size: 14pt;
+}
+
+#testdrive
+{
+
+}
+
+.section .content
+{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.searchbox
+{
+	width:600px;
+	height: 50px;
+}
+
+.bigtextbox
+{
+	font-size: 20pt;
+	font-family: 'Open Sans', sans-serif !important;
+	padding: 0;
+	padding-left: 20px;
+	vertical-align: top;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #BDBDBD;
+	outline: none;
+	color: #949494;
+}
+
+.nicebtn
+{
+	background-color: #FFBB14;
+	border:none;
+	font-size: 14pt;
+	color: #171717;
+	cursor: pointer;
+	outline: none;
+}
+
+.searchbtn
+{
+	height: 50px;
+	width: 200px;
+	margin-left: 20px;
+}
+
+#endpoints table
+{
+	color: #3d3d3d;
+}
+
+#endpoints table tr.describe
+{
+	height: 35px;
+	vertical-align: top;
+}
+
+#endpoints table tr.describe .type
+{
+	color:#949494;
+	width: 200px;
+}
+
+.language-javascript
+{
+	margin-top:0;
+}
+
+#modal
+{
+	display: none;
+	position: absolute;
+	width: 600px;
+	height: 400px;
+	background-color: #F0F0F0;
+	top: 200px;
+	left: 50%;
+	margin-left: -300px;
+	z-index: 1000;
+	box-shadow: 0px 0px 10px 3px #DEA314;
+	border-radius: 5px;
+	border-color: #DEA314;
+	border-style: solid;
+	border-width: 1px;
+}
+
+#modal .content
+{
+	margin: 20px;
+	color: #3d3d3d;
+	text-shadow: none;
+}
+
+.signuptext
+{
+	width:350px;
+	height: 40px;
+	font-size: 18pt;
+}
+
+.signupbtn
+{
+	height: 40px;
+	width: 150px;
+	margin-left: 20px;
+}
+
+.spaced-list li
+{
+	height: 30px;
+}
+
+.modal-close
+{
+	text-align: center;
+	margin-top:35px;
+	font-weight: 700;
+}
