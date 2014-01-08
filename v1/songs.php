@@ -2,11 +2,21 @@
 require_once("common.php");
 
 
-function getSong($songid, $table)
+function getSong($songid, $table = "")
 {
-	global $link;
+	global $link, $accessLevel;
 
-	$song = $link->prepare("SELECT SongID,AlbumID,Name,Singers,Mp3 FROM ".$table."_songs WHERE SongID=?");
+	if ($table == "")
+		$table = getTable($songid);
+
+	$songid = getOriginalID($songid);
+
+	if ($accessLevel == 1)
+		$q = "SELECT SongID,AlbumID,Name,Singers,Mp3 FROM ".$table."_songs WHERE SongID=?";
+	else
+		$q = "SELECT SongID,AlbumID,Name,Singers FROM ".$table."_songs WHERE SongID=?";
+
+	$song = $link->prepare($q);
 	$song->bind_param("i", $songid);
 	$song->execute();
 
@@ -18,14 +28,38 @@ function getSong($songid, $table)
 	if ($row["Singers"] != "")
 		$row["Singers"] = json_decode($row["Singers"]);
 
-	$row["Provider"] = $table;
+	//$row["Provider"] = $table;
+
+	setSongIDs($row, $table);
 
 	return $row;
 }
 
-function getSongWithAlbum($songid, $table)
+function setSongIDs(&$song, $table)
+{
+	if ($table == "songspk")
+	{
+		$song["SongID"] = "p_".$song["SongID"];
+		$song["AlbumID"] = "p_".$song["AlbumID"];
+	}
+	else if($table == "saavn")
+	{
+		$song["SongID"] = "s_".$song["SongID"];
+		$song["AlbumID"] = "s_".$song["AlbumID"];
+	}
+	else if($table == "dhingana")
+	{
+		$song["SongID"] = "d_".$song["SongID"];
+		$song["AlbumID"] = "d_".$song["AlbumID"];
+	}
+}
+
+function getSongWithAlbum($songid, $table = "")
 {
 	global $link;
+
+	if ($table == "")
+		$table = getTable($songid);
 
 	$song = getSong($songid, $table);
 	
@@ -38,6 +72,8 @@ function getSongsFromAlbum($albumid, $table)
 {
 	$response = array();
 	global $link;
+
+	$albumid = getOriginalID($albumid);
 
 	$songs = $link->prepare("SELECT SongID FROM ".$table."_songs WHERE AlbumID=?");
 	$songs->bind_param("i", $albumid);
@@ -66,6 +102,8 @@ function searchSongNameInAll($name, $isFinal)
 function searchSongName($name, $isFinal, $table)
 {
 	global $link;
+
+	$name = ucwords($name);
 
 	$songs = array();
 

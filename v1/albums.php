@@ -1,9 +1,14 @@
 <?php
 require_once("common.php");
 
-function getAlbum($albumid, $table)
+function getAlbum($albumid, $table = "")
 {
 	global $link;
+
+	if ($table == "")
+		$table = getTable($albumid);
+
+	$albumid = getOriginalID($albumid);
 
 	$album = $link->prepare("SELECT AlbumID, Name, Cast, MusicDirector, Year, AlbumArt FROM ".$table."_albums WHERE AlbumID=?");
 	$album->bind_param("i", $albumid);
@@ -20,16 +25,51 @@ function getAlbum($albumid, $table)
 	if ($row["MusicDirector"] != "")
 		$row["MusicDirector"] = json_decode($row["MusicDirector"]);
 
-	$row["Provider"] = $table;
-	
-	$row = setAlbumArt($row, $table);
+	//$row["Provider"] = $table;
+
+	setAlbumID($row, $table);
+	setAlbumArt($row, $table);
 	if ($table == "songspk")
 		$row = getMappedData($row);
 	
 	return $row;
 }
 
-function setAlbumArt($album, $table)
+function setAlbumID(&$album, $table)
+{
+	if ($table == "songspk")
+		$album["AlbumID"] = "p_".$album["AlbumID"];
+	else if($table == "saavn")
+		$album["AlbumID"] = "s_".$album["AlbumID"];
+	else if($table == "dhingana")
+		$album["AlbumID"] = "d_".$album["AlbumID"];
+}
+
+function getTable($id)
+{
+	if (strpos($id, "p_") === 0)
+		return "songspk";
+	else if (strpos($id, "d_") === 0)
+		return "dhingana";
+	else if(strpos($id, "s_") === 0)
+		return "saavn";
+	else
+		return $id;	
+}
+
+function getOriginalID($id)
+{
+	if (strpos($id, "p_") === 0)
+		return str_replace("p_", "", $id);
+	else if (strpos($id, "d_") === 0)
+		return str_replace("d_", "", $id);
+	else if(strpos($id, "s_") === 0)
+		return str_replace("s_", "", $id);
+	else
+		return $id;
+}
+
+function setAlbumArt(&$album, $table)
 {
 	$album["AlbumArtBig"] = $album["AlbumArt"];
 	$album["AlbumArtSmall"] = $album["AlbumArt"];
@@ -46,16 +86,16 @@ function setAlbumArt($album, $table)
 	}
 
 	unset($album["AlbumArt"]);
-
-	return $album;
 }
 
 function getMappedData($album)
 {
 	global $link;
 
+	$albumid = getOriginalID($album["AlbumID"]);
+
 	$map = $link->prepare("SELECT DhinganaID,SaavnID FROM map WHERE PKID=?");
-	$map->bind_param("i", $album["AlbumID"]);
+	$map->bind_param("i", $albumid);
 	$map->execute();
 	$map->store_result();
 	if ($map->num_rows == 0)
@@ -77,14 +117,18 @@ function getMappedData($album)
 	return $album;
 }
 
-function getAlbumWithSongs($albumid, $table)
+function getAlbumWithSongs($albumid, $table = "")
 {
 	global $link;
 
+	if ($table == "")
+		$table = getTable($albumid);
+
+	$albumid = getOriginalID($albumid);
 	$album = getAlbum ($albumid, $table);
-	if ($album["Provider"] == "dhingana")
+	if ($table == "dhingana")
 		$album["Songs"] = getSongsFromAlbum($album["AlbumID"], "dhingana");
-	if ($album["Provider"] == "saavn" || $album["Provider"] == "songspk" || count($album["Songs"]) == 0)
+	if ($table == "saavn" || $table == "songspk" || count($album["Songs"]) == 0)
 		$album["Songs"] = getSongsFromAlbum($albumid, "songspk");
 
 	return $album;
@@ -106,6 +150,8 @@ function searchAlbumName($name, $isFinal, $table)
 {
 	global $link;
 	
+	$name = ucwords($name);
+
 	$albums = array();
 
 	$fuzzy = "damlev(Name, ?)";
