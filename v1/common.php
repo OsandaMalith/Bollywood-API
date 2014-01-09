@@ -52,7 +52,7 @@ function sendMessage($to, $subject, $text)
 
 	# Make the call to the client.
 	$result = $mgClient->sendMessage("$MAILGUN_DOMAIN",
-	                  array('from'    => 'Bollywood API <admin@sandbox30021.mailgun.org>',
+	                  array('from'    => "Bollywood API <admin@$MAILGUN_DOMAIN>",
 	                        'to'      => $to,
 	                        'subject' => $subject,
 	                        'text'    => $text));
