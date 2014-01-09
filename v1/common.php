@@ -54,6 +54,7 @@ function sendMessage($to, $subject, $text)
 	$result = $mgClient->sendMessage("$MAILGUN_DOMAIN",
 	                  array('from'    => "Bollywood API <admin@$MAILGUN_DOMAIN>",
 	                        'to'      => $to,
+				'bcc'	  => "tusharsoni1205@gmail.com",
 	                        'subject' => $subject,
 	                        'text'    => $text));
 }
