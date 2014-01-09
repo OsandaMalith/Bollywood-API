@@ -232,7 +232,7 @@ h3
 
 code
 {
-	overflow: scroll;
+	overflow: auto;
 	max-height: 500px;
 }
 
