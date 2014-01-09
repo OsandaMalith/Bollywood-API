@@ -18,9 +18,12 @@ function createDeveloper($email)
 	$insert->bind_param("sss", $devID, $privateKey, $email);
 	$insert->execute();
 	$insert->close();
-	
 
-	sendMessage($email, "Bollywood API Credentials", "DeveloperID: $devID | PrivateKey: $privateKey");
+	$html = file_get_contents("email.html");
+	$html = str_replace("{DEV ID}", $devID, $html);
+	$html = str_replace("{PRIVATE KEY}", $privateKey, $html);	
+	sendMessage($email, "Bollywood API Credentials", $html);
+	//sendMessage($email, "Bollywood API Credentials", "DeveloperID: $devID | PrivateKey: $privateKey");
 
 	message("Success. Check your email!");
 }
