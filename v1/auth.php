@@ -87,10 +87,12 @@ function setAccessLevel($developerID)
 
 function validateRequest($developerID, $timestamp, $user_hmac)
 {
+	global $app;
+
 	$timeDiff = time() - $timestamp;
 	if ($timeDiff > 3000)
 	{
-		message("Request is too old");
+		$app->response->setBody(getMessage("Request is too old"));
 		return false;
 	}
 
@@ -98,7 +100,7 @@ function validateRequest($developerID, $timestamp, $user_hmac)
 
 	if ($privateKey == -1)
 	{
-		message("Invalid Developer ID");
+		$app->response->setBody(getMessage("Invalid Developer ID"));
 		return false;
 	}
 
@@ -106,7 +108,7 @@ function validateRequest($developerID, $timestamp, $user_hmac)
 
 	if ($valid_hmac != $user_hmac)
 	{
-		message("Invalid hmac");
+		$app->response->setBody(getMessage("Invalid hmac"));
 		return false;
 	}
 
