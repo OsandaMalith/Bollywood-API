@@ -45,11 +45,39 @@ $app->get("/search/like/songs/:name", function($name) {
 	echo json_encode(searchSongNameInAll($name, false));
 });
 
-$isValid = validateRequest($app->request->get("DeveloperID"), 
-				$app->request->get("Timestamp"), 
-				$app->request->get("hmac"));
+$app->get('/user/create', function() {
+        echo json_encode(createNewUser());
+});
 
-if ($isValid == true)
-	$app->run();
+$app->get("/user/:userid/activity", function($userid) {
+        echo json_encode(getUserActivity($userid));
+});
+
+$app->post("/user/:userid/activity", function($userid) {
+        global $app;
+        $activityData = json_decode($app->request->getBody(), true);
+        postActivityData($userid, $activityData["data"]);
+});
+
+$app->get("/explore", function() {
+        echo json_encode(getExploreAll());
+});
+
+class ValidationMiddleware extends \Slim\Middleware
+{
+	public function call()
+	{
+		$app = $this->app;
+		$isValid = validateRequest(	$app->request->get("DeveloperID"), 
+						$app->request->get("Timestamp"), 
+						$app->request->get("hmac"));
+
+		if ($isValid == true)
+			$this->next->call();
+	}
+}
+
+$app->add(new \ValidationMiddleware());
+$app->run();
 
 ?>
