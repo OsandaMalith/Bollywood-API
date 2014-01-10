@@ -4,11 +4,14 @@ require_once("common.php");
 
 function postActivityData($userid, $data)
 {
-        global $link;
+        global $link, $accessLevel;
+
+	if ($accessLevel == 0)
+		return;
 
 	if (login($userid) == false)
 	{
-		message("Failed");
+		message("Login Failed: $userid");
 		return;
 	}
 	
@@ -17,8 +20,10 @@ function postActivityData($userid, $data)
         {
 		if (doesActivityExist($userid, $activity) == false)
 		{
-			$put = $link->prepare("INSERT INTO activity (UserID, SongID, Action, `Timestamp`, Extra) VALUES (?,?,?,?,?)");
-			$put->bind_param("iisis", $userid, $activity["SongID"], $activity["Action"], $activity["Timestamp"], $activity["Extra"]);
+			$songid = getOriginalID($activity["SongID"]);
+			$table = getTable($activity["SongID"]);
+			$put = $link->prepare("INSERT INTO activity (UserID, SongID, Action, `Timestamp`, Extra, Provider) VALUES (?,?,?,?,?,?)");
+			$put->bind_param("iisiss", $userid, $songid, $activity["Action"], $activity["Timestamp"], $activity["Extra"], $table);
 			$put->execute();
 			$put->close();
         	}
