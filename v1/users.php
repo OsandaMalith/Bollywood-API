@@ -4,7 +4,12 @@ require_once("common.php");
 
 function createNewUser()
 {
-	$password = "UnsecurePassword";
+	global $accessLevel;
+
+	if ($accessLevel == 0)
+		return;
+
+	$password = "Password";
 
 	global $link;
 
@@ -20,10 +25,13 @@ function createNewUser()
 	return $response;
 }
 
-function login($userid, $password = "UnsecurePassword")
+function login($userid, $password = "Password")
 {
-	global $link;
-
+	global $link, $accessLevel;
+	
+	if ($accessLevel == 0)
+		return;
+	
 	$login = $link->prepare("SELECT UserID FROM users WHERE UserID=? AND Password=? ");
 	$login->bind_param("is", $userid, $password);
 	$login->execute();
