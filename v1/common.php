@@ -1,6 +1,9 @@
 <?php
 require_once("albums.php");
+require_once("explore.php");
 require_once("songs.php");
+require_once("users.php");
+require_once("activity.php");
 require_once("auth.php");
 require_once("secret.php");
 
@@ -13,6 +16,12 @@ $link->select_db("music");
 function message($str)
 {
 	 echo json_encode(array("message"=>$str));
+}
+
+function getMessage($str)
+{
+	 return json_encode(array("message"=>$str));
+
 }
 
 /**http://stackoverflow.com/questions/7133575/whats-wrong-with-mysqliget-result**/
