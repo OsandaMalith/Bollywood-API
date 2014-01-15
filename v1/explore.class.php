@@ -1,36 +1,34 @@
 <?php
 require_once("common.php");
 
-
-function getExploreAll()
+class Explore
 {
-	global $accessLevel;
-	
-	if ($accessLevel == 0)
-		return;
-	
-	$titles = array("Latest", "Popular", "Random");
-        $latest = array(getAlbumWithSongs(3381, "songspk"), 
-			getAlbumWithSongs(3023, "songspk"), 
-			getAlbumWithSongs(979, "songspk"), 
-			getAlbumWithSongs(1172, "songspk"), 
-			getAlbumWithSongs(2825, "songspk"), 
-			getAlbumWithSongs(102, "songspk"), 
-			getAlbumWithSongs(2922, "songspk"), 
-			getAlbumWithSongs(2394, "songspk"));
-	
-	$popular = array(getAlbumWithSongs(4572, "dhingana"),
-			 getAlbumWithSongs(4667, "dhingana"),
-			 getAlbumWithSongs(100, "songspk"));
+	public $Titles;
+	public $Albums;
 
-	$random = array(getAlbumWithSongs(1770, "songspk"),
-			getAlbumWithSongs(4820, "dhingana"),
-			getAlbumWithSongs(3024, "songspk"));
+	function __construct()
+	{
+		$latest = array("p_3381", "p_3023", "p_979", "p_1172", "p_2825", "p_102", "p_2922", "p_2394");
+		$popular = array("d_4572", "d_4667", "p_100");
+		$random = array("p_1170", "d_4820", "p_3024");
 
-	$all = array("Latest" => $latest, "Popular" => $popular, "Random" => $random);
-        
-        return array("Titles" => $titles, "Albums" => $all);    
+		$this->getAlbums($latest);
+		$this->getAlbums($popular);
+		$this->getAlbums($random);
+	
+		$this->Titles = array("Latest", "Popular", "Random");
+		$this->Albums = array("Latest" => $latest, "Popular" => $popular, "Random" => $random);
+
+	}
+
+	private static function getAlbums(&$array)
+	{
+		foreach($array as &$album)
+		{
+			$album = new Album($album);
+			$album->setSongs();
+		}
+	}
 }
-
 
 ?>

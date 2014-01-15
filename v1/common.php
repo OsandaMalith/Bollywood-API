@@ -6,7 +6,7 @@ require_once("song.class.php");
 require_once("developer.class.php");
 require_once("activity.class.php");
 require_once("user.class.php");
-require_once("explore.php");
+require_once("explore.class.php");
 require_once("secret.php");
 
 require 'vendor/autoload.php';
