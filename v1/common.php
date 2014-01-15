@@ -1,4 +1,6 @@
 <?php
+require_once("utility.class.php");
+require_once("search.class.php");
 require_once("albums.php");
 require_once("explore.php");
 require_once("songs.php");

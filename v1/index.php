@@ -4,14 +4,34 @@ require_once("common.php");
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
-$accessLevel = 0;
-
 $app = new \Slim\Slim();
 $app->response->headers->set('Content-Type', 'application/json');
 
 $app->get('/', function () {
  	message("Hello World!"); 	
  });
+
+$app->get("/test", function() {
+//	$album = new Album("p_3228");
+//	$album->setSongs();
+//	echo json_encode($album);
+
+//	$albums = Album::albumsFromArray(array("p_1", "p_2"));
+//	foreach($albums as $album)
+//		$album->setSongs();
+//	echo json_encode($albums);
+
+//	$song = new Song("p_22403");
+//	echo json_encode($song);
+
+//	$songs = Song::songsFromArray(array("p_22403", "p_22404"));
+//	foreach($songs as $song)
+//		$song->setAlbum();
+//	echo json_encode($songs);
+
+	$search = new Search("taal", false);
+	echo json_encode($search->albums());
+});
 
 $app->get("/album/:albumid", function($albumid) {
 	echo json_encode(getAlbum($albumid));
@@ -77,7 +97,8 @@ class ValidationMiddleware extends \Slim\Middleware
 	}
 }
 
-$app->add(new \ValidationMiddleware());
+$accessLevel = 1;
+//$app->add(new \ValidationMiddleware());
 $app->run();
 
 ?>
