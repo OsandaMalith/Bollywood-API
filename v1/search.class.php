@@ -33,18 +33,18 @@ class Search
 	
 	public static function uniqueMerge(&$objs1, &$objs2)
 	{
+		$removeIndexes = array();
 		for ($i=0;$i<count($objs1);$i++)
 		{
 			foreach ($objs2 as $dh)
 			{
 				if ($objs1[$i]->isEqualTo($dh))
-				{	
-					unset($objs1[$i]);
-					$i++;	
-				}
+					array_push($removeIndexes, $i);
 			}
 		}
-	
+		foreach ($removeIndexes as $i)
+			unset($objs1[$i]);
+		$objs1 = array_values($objs1);
 		return array_merge($objs1, $objs2);
 	}
 
