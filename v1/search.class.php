@@ -38,7 +38,10 @@ class Search
 			foreach ($objs2 as $dh)
 			{
 				if ($objs1[$i]->isEqualTo($dh))
+				{	
 					unset($objs1[$i]);
+					$i++;	
+				}
 			}
 		}
 	
@@ -58,9 +61,9 @@ class Search
 
 		if ($this->isFinal)
 		{
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy <= 4 ORDER BY $fuzzy ASC LIMIT 10";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy <= 2 ORDER BY $fuzzy ASC LIMIT 10";
 			$search = $link->prepare($query);
-			$search->bind_param("ss", $name, $name);
+			$search->bind_param("ss", $this->query, $this->query);
 		}
 		else
 		{

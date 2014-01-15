@@ -5,7 +5,8 @@ call_user_func($_GET["call"]);
 
 function signup()
 {
-	createDeveloper($_GET["email"]);
+	$developer = new Developer($_GET["email"], "Email");
+	$developer->create();
 }
 
 function search()
