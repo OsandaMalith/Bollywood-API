@@ -30,20 +30,18 @@ class Search
 
 		return Search::uniqueMerge($songspk, $dhingana);
 	}
-	
+
 	public static function uniqueMerge(&$objs1, &$objs2)
 	{
 		$removeIndexes = array();
-		for ($i=0;$i<count($objs1);$i++)
+		foreach ($objs1 as $key => $pk)
 		{
 			foreach ($objs2 as $dh)
 			{
-				if ($objs1[$i]->isEqualTo($dh))
-					array_push($removeIndexes, $i);
+				if ($pk->isEqualTo($dh))
+					unset($objs1[$key]);
 			}
 		}
-		foreach ($removeIndexes as $i)
-			unset($objs1[$i]);
 		$objs1 = array_values($objs1);
 		return array_merge($objs1, $objs2);
 	}
@@ -97,9 +95,14 @@ class Search
 	private function processAlbumResults($ids)
 	{
 		$albums = Album::albumsFromArray($ids);
-		foreach($albums as $album)
+		foreach($albums as $key => $album)
+		{
 			$album->setSongs();
-		return $albums;	
+			if (count($album->Songs) == 0)
+				unset($albums[$key]);
+		}
+
+		return array_values($albums);	
 	}
 }
 	

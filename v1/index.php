@@ -91,7 +91,7 @@ $app->post("/user/:userid/activity", function($userid) {
 });
 
 $app->get("/explore", function() {
-        echo json_encode(getExploreAll());
+        echo json_encode(new Explore);
 });
 
 class ValidationMiddleware extends \Slim\Middleware
