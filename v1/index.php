@@ -11,28 +11,6 @@ $app->get('/', function () {
 	Utility::json("Hello World"); 	
 });
 
-$app->get("/test", function() {
-//	$album = new Album("p_3228");
-//	$album->setSongs();
-//	echo json_encode($album);
-
-//	$albums = Album::albumsFromArray(array("p_1", "p_2"));
-//	foreach($albums as $album)
-//		$album->setSongs();
-//	echo json_encode($albums);
-
-//	$song = new Song("p_22403");
-//	echo json_encode($song);
-
-//	$songs = Song::songsFromArray(array("p_22403", "p_22404"));
-//	foreach($songs as $song)
-//		$song->setAlbum();
-//	echo json_encode($songs);
-
-	$search = new Search("jo bhi main", true);
-	echo json_encode($search->songs());
-});
-
 $app->get("/album/:albumid", function($albumid) {
 	echo json_encode(new Album($albumid));
 });
@@ -83,7 +61,7 @@ $app->post("/user/:userid/activity", function($userid) {
 	$user = new User;
 	$user->setUserid($userid);
 	$activities = json_decode($app->request->getBody(), true);
-	foreach ($activites as $data)
+	foreach ($activities["data"] as $data)
 	{
 		$activity = new Activity($user, $data);
 		$activity->save();
