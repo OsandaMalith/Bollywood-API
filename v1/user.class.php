@@ -9,9 +9,9 @@ class User
 	public static function create()
 	{
 		global $link;
-
+		$password = "Password";
 		$createUser = $link->prepare("INSERT INTO users (Password) VALUES (?)");
-		$createUser->bind_param("s", "Password");
+		$createUser->bind_param("s", $password);
 		$createUser->execute();
 		$createUser->close();
 
@@ -35,9 +35,10 @@ class User
 
 	private function load()
 	{
+		$password = "Password";
 		global $link;
 		$login = $link->prepare("SELECT UserID FROM users WHERE UserID=? AND Password=? ");
-		$login->bind_param("is", $this->userid, "Password");
+		$login->bind_param("is", $this->userid, $password);
 		$login->execute();
 		$login->store_result();
 		$login->bind_result($this->userid);
