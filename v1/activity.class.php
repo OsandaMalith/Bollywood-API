@@ -22,11 +22,12 @@ class Activity
 
 	public function save()
 	{
+		global $link;
 		if ($this->exists() || !$this->user->exists)
 			return;
- 			
+ 		$userid = $this->user->getUserid();
 		$save = $link->prepare("INSERT INTO activity (UserID, SongID, Action, `Timestamp`, Extra, Provider) VALUES (?,?,?,?,?,?)");
-		$save->bind_param("iisiss", $this->user->getUserid(), $this->$songID, $this->action, $this->timestamp, $this->extra, $this->table);
+		$save->bind_param("iisiss", $userid, $this->songID, $this->action, $this->timestamp, $this->extra, $this->table);
 		$save->execute();
 		$save->close();
 	}
@@ -34,8 +35,9 @@ class Activity
 	private function exists()
 	{
 		global $link;
+		$userid = $this->user->getUserid();
 		$check = $link->prepare("SELECT * FROM activity WHERE UserID=? and `Timestamp`=?");
-		$check->bind_param("ii", $this->user->getUserid(), $this->timestamp());
+		$check->bind_param("ii", $userid, $this->timestamp);
 		$check->execute();
 		$check->store_result();
 		$count = $check->num_rows;
