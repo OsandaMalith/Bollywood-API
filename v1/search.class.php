@@ -18,7 +18,9 @@ class Search
 		$this->searchFor = "albums";
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
-		return Search::uniqueMerge($songspk, $dhingana);
+		$results = Search::uniqueMerge($songspk, $dhingana);
+		$this->sanitizeResults($results);
+		return $results;
 	}
 
 	public function songs()
@@ -26,7 +28,21 @@ class Search
 		$this->searchFor = "songs";
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
-		return Search::uniqueMerge($songspk, $dhingana);
+		$results = Search::uniqueMerge($songspk, $dhingana);
+		$this->sanitizeResults($results);
+		return $results;
+	}
+
+	public function sanitizeResults(&$results)
+	{
+		if ($this->isFinal == false)
+			return;
+		foreach ($results as $key => $result)
+		{
+			$lev = levenshtein($this->query, $result->Name);
+			if ($lev > 3)
+				unset($results[$key]);
+		}
 	}
 
 	public static function uniqueMerge(&$objs1, &$objs2)
@@ -64,9 +80,9 @@ class Search
 		else
 		{
 			$startWith = $this->query."%";
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy OR Name Like ? LIMIT 10";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE Name Like ? LIMIT 10";
 			$search = $link->prepare($query);
-			$search->bind_param("ss", $this->query, $startWith);
+			$search->bind_param("s", $startWith);
 		}
 		$search->execute();
 		$search->bind_result($id);
