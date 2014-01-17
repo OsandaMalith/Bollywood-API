@@ -19,6 +19,12 @@ class Search
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
 		$results = Search::uniqueMerge($songspk, $dhingana);
+		if (!$this->isFinal)
+		{
+			$this->isFinal = true;
+			$newResults = $this->albums();
+			$results = Search::uniqueMerge($results, $newResults);
+		}
 		$this->sanitizeResults($results);
 		return $results;
 	}
@@ -29,9 +35,17 @@ class Search
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
 		$results = Search::uniqueMerge($songspk, $dhingana);
+		
+		if (!$this->isFinal)
+		{
+			$this->isFinal = true;
+			$newResults = $this->songs();
+			$results = Search::uniqueMerge($results, $newResults);
+		}
 		$this->sanitizeResults($results);
 		return $results;
 	}
+	
 
 	public function sanitizeResults(&$results)
 	{
