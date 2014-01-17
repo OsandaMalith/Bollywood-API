@@ -74,7 +74,7 @@ class Search
 
 		if ($this->isFinal)
 		{
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy LIMIT 10";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy LIMIT 30";
 			$search = $link->prepare($query);
 			$search->bind_param("s", $this->query);
 		}
