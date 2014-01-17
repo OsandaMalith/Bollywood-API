@@ -18,7 +18,6 @@ class Search
 		$this->searchFor = "albums";
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
-
 		return Search::uniqueMerge($songspk, $dhingana);
 	}
 
@@ -27,7 +26,6 @@ class Search
 		$this->searchFor = "songs";
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
-
 		return Search::uniqueMerge($songspk, $dhingana);
 	}
 
@@ -50,7 +48,7 @@ class Search
 	{
 		global $link;
 	
-		$fuzzy = "damlev(Name, ?)";
+		$fuzzy = "match(Name) against (?)";
 
 		if ($this->searchFor == "albums")
 			$idField = "AlbumID";
@@ -59,17 +57,16 @@ class Search
 
 		if ($this->isFinal)
 		{
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy <= 2 ORDER BY $fuzzy ASC LIMIT 10";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy LIMIT 10";
 			$search = $link->prepare($query);
-			$search->bind_param("ss", $this->query, $this->query);
+			$search->bind_param("s", $this->query);
 		}
 		else
 		{
 			$startWith = $this->query."%";
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy <=2 OR Name Like ? LIMIT 10";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy OR Name Like ? LIMIT 10";
 			$search = $link->prepare($query);
 			$search->bind_param("ss", $this->query, $startWith);
-
 		}
 		$search->execute();
 		$search->bind_result($id);
@@ -77,14 +74,14 @@ class Search
 		while($search->fetch())
 			array_push($ids, Utility::getExternalID($id, $table));
 		$search->close();
-
+		
 		if ($this->searchFor == "albums")
 			return $this->processAlbumResults($ids);
 		else
 			return $this->processSongResults($ids);
 	}
 	
-	private function processSongResults($ids)
+	private function processSongResults(&$ids)
 	{
 		$songs = Song::songsFromArray($ids);
 		foreach($songs as $song)
@@ -92,16 +89,15 @@ class Search
 		return $songs;
 	}
 
-	private function processAlbumResults($ids)
+	private function processAlbumResults(&$ids)
 	{
-		$albums = Album::albumsFromArray($ids);
+		$albums = (array) Album::albumsFromArray($ids);
 		foreach($albums as $key => $album)
 		{
 			$album->setSongs();
 			if (count($album->Songs) == 0)
 				unset($albums[$key]);
 		}
-
 		return array_values($albums);	
 	}
 }

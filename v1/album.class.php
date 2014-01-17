@@ -24,12 +24,11 @@ class Album
 		$this->fetchMapData();
 	}
 
-	public static function albumsFromArray($albumids)
+	public static function albumsFromArray(&$albumids)
 	{
 		$albums = array();
 		foreach($albumids as $albumid)
 			array_push($albums, new Album($albumid));
-
 		return $albums;
 	}
 
@@ -83,13 +82,13 @@ class Album
 		if ($this->table == "dhingana")
 			return;
 
-		if ($this->map["DhinganaID"] != -1)
+		if ($this->map["DhinganaID"] != -1 && $this->map["DhinganaID"] != NULL)
 		{
 			$this->table = "dhingana";
 			$this->internalAlbumid = $this->map["DhinganaID"];
 			$this->fetchData();
 		}
-		else if($this->map["SaavnID"] != -1)
+		else if($this->map["SaavnID"] != -1 && $this->map["SaavnID"] != NULL )
 		{
 			$this->table = "saavn";
 			$this->internalAlbumid = $this->map["SaavnID"];
@@ -118,6 +117,7 @@ class Album
 		$this->map["SaavnID"] = $saavnid;
 		$this->map["PKID"] = $pkid;
 		$this->map["DhinganaID"] = $dhinganaid;
+
 	}
 
 	private function sanitize()

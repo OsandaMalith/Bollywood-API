@@ -12,7 +12,7 @@ require_once("secret.php");
 require 'vendor/autoload.php';
 use Mailgun\Mailgun;
 
-$link= new mysqli("127.0.0.1", "root", "root");
-$link->select_db("music");
-
+$link= new mysqli($DB_HOST, $DB_USER, $DB_PASS);
+$link->select_db($DB_DB);
+$link->set_charset("utf8");
 ?>
