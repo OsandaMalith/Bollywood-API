@@ -43,6 +43,7 @@ class Search
 			if ($lev > 3)
 				unset($results[$key]);
 		}
+		$results = array_values($results);
 	}
 
 	public static function uniqueMerge(&$objs1, &$objs2)
