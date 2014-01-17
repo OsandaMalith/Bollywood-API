@@ -12,6 +12,8 @@ require_once("secret.php");
 require 'vendor/autoload.php';
 use Mailgun\Mailgun;
 
+date_default_timezone_set("UTC");
+
 $link= new mysqli($DB_HOST, $DB_USER, $DB_PASS);
 $link->select_db($DB_DB);
 $link->set_charset("utf8");

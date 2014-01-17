@@ -3,6 +3,22 @@ require_once("common.php");
 
 class Utility
 {
+	public static function setCacheHeaders($app)
+	{
+		$uri = $app->request->getResourceUri();
+		if (strpos($uri, "/search") == 0 || strpos($uri, "/album") == 0 || strpos($uri, "/song") == 0)
+		{
+			$hash = md5($uri);
+			$app->etag($hash);
+			$app->expires("+1 week");
+		}
+		else if(strpos($uri, "/explore") == 0)
+		{
+			$app->lastModified(1389971809);
+			$app->expires("+12 hours");
+		}
+	}
+
 	public static function json($message)
 	{
 		echo json_encode(array("message"=>$message));
