@@ -66,7 +66,7 @@ class Search
 		global $link;
 	
 		$fuzzy = "match(Name) against (?)";
-
+	
 		if ($this->searchFor == "albums")
 			$idField = "AlbumID";
 		else if($this->searchFor == "songs")
@@ -74,7 +74,7 @@ class Search
 
 		if ($this->isFinal)
 		{
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy ORDER BY $fuzzy ASC LIMIT 30";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy ORDER BY $fuzzy DESC LIMIT 30";
 			$search = $link->prepare($query);
 			$search->bind_param("ss", $this->query, $this->query);
 		}
