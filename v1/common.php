@@ -1,4 +1,5 @@
 <?php
+ob_start("ob_gzhandler");
 require_once("utility.class.php");
 require_once("search.class.php");
 require_once("album.class.php");
