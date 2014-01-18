@@ -24,6 +24,7 @@ class Search
 			$this->isFinal = true;
 			$newResults = $this->albums();
 			$results = Search::uniqueMerge($results, $newResults);
+			$this->isFinal = false;
 		}
 		$this->sanitizeResults($results);
 		return $results;
@@ -41,6 +42,7 @@ class Search
 			$this->isFinal = true;
 			$newResults = $this->songs();
 			$results = Search::uniqueMerge($results, $newResults);
+			$this->isFinal = false;
 		}
 		$this->sanitizeResults($results);
 		return $results;
