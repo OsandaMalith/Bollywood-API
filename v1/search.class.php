@@ -36,7 +36,6 @@ class Search
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
 		$results = Search::uniqueMerge($songspk, $dhingana);
-		
 		if (!$this->isFinal)
 		{
 			$this->isFinal = true;
@@ -87,7 +86,8 @@ class Search
 			$idField = "AlbumID";
 		else if($this->searchFor == "songs")
 			$idField = "SongID";
-
+			
+		$startWith = $this->query."%";
 		if ($this->isFinal)
 		{
 			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy ORDER BY $fuzzy DESC LIMIT 10";
@@ -96,7 +96,6 @@ class Search
 		}
 		else
 		{
-			$startWith = $this->query."%";
 			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE Name Like ? LIMIT 10";
 			$search = $link->prepare($query);
 			$search->bind_param("s", $startWith);
