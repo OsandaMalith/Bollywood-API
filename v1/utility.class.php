@@ -3,17 +3,20 @@ require_once("common.php");
 
 class Utility
 {
-	public static function setCacheHeaders($app)
+	public static function setCacheHeaders(&$app)
 	{
+		$resetNum = "1";
 		$uri = $app->request->getResourceUri();
 		if (strpos($uri, "/search") == 0 || strpos($uri, "/album") == 0 || strpos($uri, "/song") == 0)
 		{
 			$hash = md5($uri);
-			$app->etag($hash);
+			$app->etag($hash.$resetNum);
 			$app->expires("+1 week");
+			$app->response->headers->set('Cache-Control', 'public, max-age=86400');
 		}
 		else if(strpos($uri, "/explore") == 0)
 		{
+			$app->response->headers->set('Cache-Control', 'public, max-age=86400');
 			$app->lastModified(1389971809);
 			$app->expires("+12 hours");
 		}
@@ -24,29 +27,23 @@ class Utility
 		echo json_encode(array("message"=>$message));
 	}
 
-	public static function validateRequest($developerID, $timestamp, $user_hmac)
+	public static function validateRequest($developerID, $user_hmac)
 	{
 		global $app;
-
-		$timeDiff = time() - $timestamp;
-		if ($timeDiff > 30)
-		{
-			Utility::json("Request is too old");
-			return false;
-		}
+		
 		$developer = new Developer($developerID, "DeveloperID");
-
+		$uri = $app->request->getResourceUri()."?".$_SERVER['QUERY_STRING'];
 		if (!$developer->exists)
 		{
 			Utility::json("Invalid Developer ID");
 			return false;
 		}
 
-		$valid_hmac = hash_hmac("sha256", $timestamp, $privateKey);
+		$valid_hmac = hash_hmac("sha256", $uri, $developer->privateKey);
 
 		if ($valid_hmac != $user_hmac)
 		{
-			Utility::json("Invalid hmac");	
+			Utility::json("Invalid hmac. Hmac this: $uri");	
 			return false;
 		}
 
