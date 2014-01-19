@@ -22,8 +22,8 @@ class Developer
 			$this->developerID = $identifier;
 		}
 
-		$dev = $link->prepare("SELECT Email, DeveloperID, PrivateKey, AccessLevel From developers WHERE ?=?");
-		$dev->bind_param("ss", $this->which, $this->identifier);
+		$dev = $link->prepare("SELECT Email, DeveloperID, PrivateKey, AccessLevel From developers WHERE $which=?");
+		$dev->bind_param("s", $identifier);
 		$dev->execute();
 		$dev->store_result();
 
