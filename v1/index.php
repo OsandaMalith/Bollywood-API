@@ -65,7 +65,6 @@ $app->get('/user/create', function() {
 
 $app->post("/user/:userid/activity", function($userid) {
         global $app;
-
 	$user = new User;
 	$user->setUserid($userid);
 	$activities = json_decode($app->request->getBody(), true);
@@ -74,6 +73,7 @@ $app->post("/user/:userid/activity", function($userid) {
 		$activity = new Activity($user, $data);
 		$activity->save();
 	}
+	Utility::json("success");
 });
 
 $app->get("/explore", function() use ($app) {
@@ -86,16 +86,22 @@ class ValidationMiddleware extends \Slim\Middleware
 	public function call()
 	{
 		$app = $this->app;
+		/*REMOVE WHEN 1.0 IS NOT USED ANYMORE*/
+		if ($app->request->get("Version") == NULL)
+		{
+			$this->next->call();
+			return;
+		}
+		/*-----------------------------------*/
 		$isValid = Utility::validateRequest(	$app->request->get("DeveloperID"), 
-							$app->request->get("Timestamp"), 
-							$app->request->get("hmac"));
+							$app->request->headers->get("hmac"));
 
 		if ($isValid == true)
 			$this->next->call();
 	}
 }
 $accessLevel = 1;
-//$app->add(new \ValidationMiddleware());
+$app->add(new \ValidationMiddleware());
 $app->run();
 
 ?>
