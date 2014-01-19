@@ -85,6 +85,7 @@ class ValidationMiddleware extends \Slim\Middleware
 {
 	public function call()
 	{
+		global $version;
 		$app = $this->app;
 		/*REMOVE WHEN 1.0 IS NOT USED ANYMORE*/
 		if ($app->request->get("Version") == NULL)
@@ -92,6 +93,8 @@ class ValidationMiddleware extends \Slim\Middleware
 			$this->next->call();
 			return;
 		}
+		else
+			$version = $app->request->get("Version");
 		/*-----------------------------------*/
 		$isValid = Utility::validateRequest(	$app->request->get("DeveloperID"), 
 							$app->request->headers->get("hmac"));
@@ -101,6 +104,7 @@ class ValidationMiddleware extends \Slim\Middleware
 	}
 }
 $accessLevel = 1;
+$version = 1.0;
 $app->add(new \ValidationMiddleware());
 $app->run();
 
