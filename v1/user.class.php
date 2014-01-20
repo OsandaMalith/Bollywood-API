@@ -10,8 +10,9 @@ class User
 	{
 		global $link;
 		$password = "Password";
-		$createUser = $link->prepare("INSERT INTO users (Password) VALUES (?)");
-		$createUser->bind_param("s", $password);
+		$timestamp = time();
+		$createUser = $link->prepare("INSERT INTO users (Password,CreatedOn) VALUES (?,?)");
+		$createUser->bind_param("si", $password, $timestamp);
 		$createUser->execute();
 		$createUser->close();
 
