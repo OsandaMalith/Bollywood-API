@@ -26,7 +26,7 @@ class Activity
 		if ($this->exists() || !$this->user->exists)
 			return;
  		$userid = $this->user->getUserid();
-		$save = $link->prepare("INSERT INTO activity (UserID, SongID, Action, `Timestamp`, Extra, Provider) VALUES (?,?,?,?,?,?,?)");
+		$save = $link->prepare("INSERT INTO activity (UserID, SongID, Action, `Timestamp`, Extra, Provider, Version) VALUES (?,?,?,?,?,?,?)");
 		$save->bind_param("iisisss", $userid, $this->songID, $this->action, $this->timestamp, $this->extra, $this->table, $version);
 		$save->execute();
 		$save->close();
