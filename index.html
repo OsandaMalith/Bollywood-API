@@ -105,7 +105,9 @@
 					<li>You'll need to add the following query strings to <strong>every</strong> request:</li>
 					<ul>
 						<li>DeveloperID</li>
-						<li>Timestamp</li>
+					</ul>
+					<li>You'll need to add the following fields to the header of your request:</li>
+					<ul>
 						<li>hmac</li>
 					</ul>
 					<li>You're now ready to make the request</li>
@@ -114,18 +116,16 @@
 				<strong>What is a DeveloperID and how do I get it?</strong>
 				<p>A DeveloperID is used to identify you from the request. You will get one in an email when you signup.</p>
 
-				<strong>What is a Timestamp?</strong>
-				<p>A unix timestamp is the number of seconds since January 1, 1970. Most languages have an in-built function. For example, call time() in PHP.</p>
-
 				<strong>What is HMAC and how do I generate one?</strong>
-				<p>HMAC a digital signature that helps us make sure that you have made the request. You can generate one by encrypting the Timestamp using your <strong>Private Key</strong>. Use the SHA256 algorithm. You must generate one for each request.
+				<p>HMAC a digital signature that helps us make sure that you have made the request. You can generate one by encrypting the request using your <strong>Private Key</strong>. Use the SHA256 algorithm. You must generate one for each request.
 				</p>
 
-				<p>For example, call hash_hmac("sha256", $timestamp, $privatekey) in PHP. Make sure that the timestamp is the same as the one that you are sending as a query string.</p>
+				<p>For example, call hash_hmac("sha256", $request, $privatekey) in PHP.</p>
 
 				<strong>An example request to get the data for an album:</strong>
-				<pre><code>http://www.bollywoodapi.com/v1/albums/s_123?DeveloperID=456&amp;Timestamp=1389195200&amp;hmac=7d1fce595ce8f9a0a724c76ecba700420fca0031fd9dca1fdf3</code></pre>
-
+				<pre><code>http://www.bollywoodapi.com/v1/albums/s_123?DeveloperID=456&amp;</code></pre>
+				<p>Include the the following header field</p>
+				<pre><code>hmac: 2347324y7jsdfasdjn234</code></pre>
 			</div>
 		</div>
 
