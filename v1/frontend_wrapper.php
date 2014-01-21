@@ -27,7 +27,7 @@ function search()
 	$timestamp = time();
 	$hmac = hash_hmac("sha256", $timestamp, $PRIVATEKEY);
 
-	$url = "http://www.bollywoodapi.com/v1/search/albums/".rawurlencode($_GET["name"])."?DeveloperID=$DEVID&Timestamp=$timestamp&hmac=$hmac";
+	$url = "http://www.bollywoodapi.com/v1/search/albums/".rawurlencode($_GET["name"])."?DeveloperID=$DEVID";
 	
 	echo file_get_contents("$url");
 }
