@@ -1,6 +1,6 @@
 <?php
 require_once("common.php");
-
+use Mailgun\Mailgun;
 class Utility
 {
 	public static function setCacheHeaders(&$app)
@@ -50,10 +50,9 @@ class Utility
 		return true;
 	}
 	
-	public static function sendMessage($to, $subject, $text)
+	public static function sendMessage($to, $subject, $text) 
 	{
 		global $MAILGUN_DOMAIN, $MAILGUN_API_KEY;
-
 		# Instantiate the client.
 		$mgClient = new Mailgun($MAILGUN_API_KEY);
 

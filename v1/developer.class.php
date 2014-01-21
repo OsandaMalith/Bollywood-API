@@ -52,8 +52,8 @@ class Developer
 			return;
 		}	
 	
-		$this->developerID = hash("crc32", $email);
-		$this->privateKey = hash("md5", $email.time().Utility::generateRandomString());
+		$this->developerID = hash("crc32", $this->email);
+		$this->privateKey = hash("md5", $this->email . time() . Utility::generateRandomString());
 
 		$insert = $link->prepare("INSERT INTO developers (DeveloperID, PrivateKey, Email, AccessLevel) VALUES (?,?,?,0)");
 		$insert->bind_param("sss", $this->developerID, $this->privateKey, $this->email);
@@ -68,9 +68,9 @@ class Developer
 	public function emailCredentials()
 	{
 		$html = file_get_contents("email.html");
-		$html = str_replace("{DEV ID}", $devID, $html);
-		$html = str_replace("{PRIVATE KEY}", $privateKey, $html);	
-		Utility::sendMessage($email, "Bollywood API Credentials", $html);
+		$html = str_replace("{DEV ID}", $this->developerID, $html);
+		$html = str_replace("{PRIVATE KEY}", $this->privateKey, $html);	
+		Utility::sendMessage($this->email, "Bollywood API Credentials", $html);
 	}
 
 }

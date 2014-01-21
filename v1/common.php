@@ -8,10 +8,10 @@ require_once("developer.class.php");
 require_once("activity.class.php");
 require_once("user.class.php");
 require_once("explore.class.php");
+require_once("statistics.class.php");
 require_once("secret.php");
 
 require 'vendor/autoload.php';
-use Mailgun\Mailgun;
 
 date_default_timezone_set("UTC");
 
