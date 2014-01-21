@@ -30,6 +30,8 @@ abstract class Action
 	const DELETED_DOWNLOADS = "DeletedFromDownloads";
 	const ADDED_PLAYLIST = "AddedToPlaylist";
 	const REMOVED_PLAYLIST = "DeletedFromPlaylist";
+	const ACTIVE_USERS = "ActiveUsers";
+	const SIGNUPS = "Signups";
 }
 
 class Statistics
@@ -47,7 +49,7 @@ class Statistics
 
 	function __construct($period, $periodCount, $action, $songOrigin = SongOrigin::ANY, $provider = Provider::ANY, $isCumulative = false)
 	{
-		$this->currentTime = time();
+		$this->currentTime = time() /*- (24*3600)*/;
 		$this->period = $period;
 		$this->periodCount = $periodCount;
 		$this->isCumulative = $isCumulative;	
@@ -65,19 +67,32 @@ class Statistics
 	{
 		global $link;
 		
-		$cumCount = 0;
+		$cumCount = $this->initialCumCount();
 		for ($i=0;$i<$this->periodCount;$i++)
 		{
-			$data = $link->prepare("select count(*) as count from activity where Action=? and 
-												Timestamp>=? and 
-												Timestamp<? and
-												Extra like ? and
-												Provider like ?");
-			$data->bind_param("siiss", $this->action, 
-							$this->dataPeriodRange["from"], 
-							$this->dataPeriodRange["to"], 
-							$this->songOriginFilter, 
-							$this->providerFilter);
+			if ($this->action == Action::SIGNUPS)
+			{
+				$data = $link->prepare("select count(*) as count from users where CreatedOn>=? and CreatedOn<?");
+				$data->bind_param("ii", $this->dataPeriodRange["from"], $this->dataPeriodRange["to"]);
+			}
+			else if($this->action == Action::ACTIVE_USERS)
+			{
+				$data = $link->prepare("select count(distinct UserID) from activity where Timestamp>=? and Timestamp<?");
+				$data->bind_param("ii", $this->dataPeriodRange["from"], $this->dataPeriodRange["to"]);
+			}
+			else
+			{
+				$data = $link->prepare("select count(*) as count from activity where Action=? and 
+													Timestamp>=? and 
+													Timestamp<? and
+													Extra like ? and
+													Provider like ?");
+				$data->bind_param("siiss", $this->action, 
+								$this->dataPeriodRange["from"], 
+								$this->dataPeriodRange["to"], 
+								$this->songOriginFilter, 
+								$this->providerFilter);
+			}
 			$data->execute();
 			$data->bind_result($count);
 			$data->fetch();
@@ -89,11 +104,44 @@ class Statistics
 		}
 	}
 
+	private function initialCumCount()
+	{
+		global $link;
+
+		if ($this->action == Action::SIGNUPS)
+		{
+			$data = $link->prepare("select count(*) as count from users where CreatedOn<? or CreatedOn is null");
+			$data->bind_param("i", $this->dataPeriodRange["from"]);
+		}
+		else if($this->action == Action::ACTIVE_USERS)
+		{
+			$data = $link->prepare("select count(distinct UserID) from activity where Timestamp<?");
+			$data->bind_param("i", $this->dataPeriodRange["from"]);
+		}
+		else
+		{
+			$data = $link->prepare("select count(*) as count from activity where Action=? and 
+												Timestamp<? and
+												Extra like ? and
+												Provider like ?");
+			$data->bind_param("siss", $this->action, 
+							$this->dataPeriodRange["from"], 
+							$this->songOriginFilter, 
+							$this->providerFilter);
+		}
+		$data->execute();
+		$data->bind_result($count);
+		$data->fetch();
+		$data->close();
+		
+		return $count;	
+	}
+
 	private function createLabels()
 	{
 		for ($i=0;$i<$this->periodCount;$i++)
 		{
-			array_push($this->labels, $i);
+			array_push($this->labels, "$i");
 		}
 	}
 	
@@ -104,9 +152,5 @@ class Statistics
 	}
 	
 }
-
-$stat = new Statistics(Period::HOUR, 48, Action::DOWNLOADED, SongOrigin::ANY, Provider::ANY, true);
-$stat->fetchStats();
-echo json_encode($stat);
 
 ?>
