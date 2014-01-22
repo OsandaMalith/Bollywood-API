@@ -29,7 +29,7 @@ class Utility
 
 	public static function validateRequest($developerID, $user_hmac)
 	{
-		global $app;
+		global $app, $accessLevel;
 		
 		$developer = new Developer($developerID, "DeveloperID");
 		$uri = $app->request->getResourceUri()."?".$_SERVER['QUERY_STRING'];
@@ -46,6 +46,8 @@ class Utility
 			Utility::json("Invalid hmac. Hmac this: $uri");	
 			return false;
 		}
+		
+		$accessLevel = $developer->accessLevel;
 
 		return true;
 	}

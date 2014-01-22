@@ -55,6 +55,11 @@ class Song
 
 	private function sanitize()
 	{
+		global $accessLevel;
+
+		if ($accessLevel == 0)
+			unset($this->Mp3);
+
 		if ($this->Singers !="" )
 			$this->Singers = json_decode($this->Singers);
 		

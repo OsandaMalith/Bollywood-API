@@ -8,7 +8,10 @@ class User
 
 	public static function create()
 	{
-		global $link;
+		global $link, $accessLevel;
+		if ($accessLevel == 0)
+			return;
+
 		$password = "Password";
 		$timestamp = time();
 		$createUser = $link->prepare("INSERT INTO users (Password,CreatedOn) VALUES (?,?)");
