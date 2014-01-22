@@ -104,7 +104,7 @@ class ValidationMiddleware extends \Slim\Middleware
 	}
 }
 $accessLevel = 1;
-$version = 1.0;
+$version = "1.0";
 $app->add(new \ValidationMiddleware());
 $app->run();
 
