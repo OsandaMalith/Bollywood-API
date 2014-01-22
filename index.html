@@ -104,6 +104,7 @@
 					<li>Choose one of the endpoints</li>
 					<li>You'll need to add the following query strings to <strong>every</strong> request:</li>
 					<ul>
+						<li>Version</li>
 						<li>DeveloperID</li>
 					</ul>
 					<li>You'll need to add the following fields to the header of your request:</li>
@@ -112,6 +113,9 @@
 					</ul>
 					<li>You're now ready to make the request</li>
 				</ol>
+				
+				<strong>What is value for Version?</strong>
+				<p>It can be any arbitary value. For example Version=1.0</p>
 
 				<strong>What is a DeveloperID and how do I get it?</strong>
 				<p>A DeveloperID is used to identify you from the request. You will get one in an email when you signup.</p>
@@ -123,7 +127,7 @@
 				<p>For example, call hash_hmac("sha256", $request, $privatekey) in PHP.</p>
 
 				<strong>An example request to get the data for an album:</strong>
-				<pre><code>http://www.bollywoodapi.com/v1/albums/s_123?DeveloperID=456&amp;</code></pre>
+				<pre><code>http://www.bollywoodapi.com/v1/albums/s_123?DeveloperID=456&amp;Version=1.0</code></pre>
 				<p>Include the the following header field</p>
 				<pre><code>hmac: 2347324y7jsdfasdjn234</code></pre>
 			</div>
