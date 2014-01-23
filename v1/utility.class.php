@@ -5,7 +5,7 @@ class Utility
 {
 	public static function setCacheHeaders(&$app)
 	{
-		$resetNum = "1";
+		$resetNum = "2";
 		$uri = $app->request->getResourceUri();
 		if (strpos($uri, "/search") == 0 || strpos($uri, "/album") == 0 || strpos($uri, "/song") == 0)
 		{
