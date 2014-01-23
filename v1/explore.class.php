@@ -10,7 +10,7 @@ class Explore
 	{
 		$latest = array("p_3383", "p_3381", "p_3023", "p_979", "p_1172", "p_2825", "p_102", "p_2922");
 		$popular = array("p_2394", "d_2476", "d_2842", "p_341", "d_4572", "d_4667", "p_100");
-		$random = array("p_1170", "d_1559", "d_7577", "p_1420", "p_87", "d_4820", "p_3024");
+		$random = array("p_470", "p_1769", "p_2211", "d_380", "d_1559", "d_7577", "d_4820", "p_3024");
 
 		$this->getAlbums($latest);
 		$this->getAlbums($popular);
