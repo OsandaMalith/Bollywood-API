@@ -17,7 +17,7 @@ class Utility
 		else if(strpos($uri, "/explore") == 0)
 		{
 			$app->response->headers->set('Cache-Control', 'public, max-age=86400');
-			$app->lastModified(1390390932);
+			$app->lastModified(1390485331);
 			$app->expires("+12 hours");
 		}
 	}
