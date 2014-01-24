@@ -49,9 +49,23 @@ class Utility
 		
 		$accessLevel = $developer->accessLevel;
 
+		if ($accessLevel == 0)
+			Utility::insertRequest($developer);
+
 		return true;
 	}
 	
+	public static function insertRequest(&$developer)
+	{
+		global $app, $link;
+		$timestamp = time();
+		$uri = $app->request->getResourceUri();
+		$insert = $link->prepare("insert into requests (DeveloperID,Request,Timestamp) values (?,?,?)");
+		$insert->bind_param("ssi", $developer->developerID, $uri, $timestamp);
+		$insert->execute();
+		$insert->close();
+	}
+
 	public static function sendMessage($to, $subject, $text) 
 	{
 		global $MAILGUN_DOMAIN, $MAILGUN_API_KEY;
