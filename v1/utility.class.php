@@ -5,18 +5,18 @@ class Utility
 {
 	public static function setCacheHeaders(&$app)
 	{
-		$resetNum = "2";
+		$resetNum = "3";
 		$uri = $app->request->getResourceUri();
 		if (strpos($uri, "/search") == 0 || strpos($uri, "/album") == 0 || strpos($uri, "/song") == 0)
 		{
 			$hash = md5($uri);
 			$app->etag($hash.$resetNum);
-			$app->expires("+1 week");
-			$app->response->headers->set('Cache-Control', 'public, max-age=86400');
+			$app->expires("+12 hours");
+			$app->response->headers->set('Cache-Control', 'public, max-age=43200');
 		}
 		else if(strpos($uri, "/explore") == 0)
 		{
-			$app->response->headers->set('Cache-Control', 'public, max-age=86400');
+			$app->response->headers->set('Cache-Control', 'public, max-age=43200');
 			$app->lastModified(1390486141);
 			$app->expires("+12 hours");
 		}
