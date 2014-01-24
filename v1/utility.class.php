@@ -9,16 +9,16 @@ class Utility
 		$uri = $app->request->getResourceUri();
 		if (strpos($uri, "/search") == 0 || strpos($uri, "/album") == 0 || strpos($uri, "/song") == 0)
 		{
-			$hash = md5($uri);
+			/*$hash = md5($uri);
 			$app->etag($hash.$resetNum);
-			$app->expires("+12 hours");
-			$app->response->headers->set('Cache-Control', 'public, max-age=43200');
+			$app->expires("+12 hours");*/
+			$app->response->headers->set('Cache-Control', 'public, max-age=20');
 		}
 		else if(strpos($uri, "/explore") == 0)
 		{
-			$app->response->headers->set('Cache-Control', 'public, max-age=43200');
-			$app->lastModified(1390486141);
-			$app->expires("+12 hours");
+			$app->response->headers->set('Cache-Control', 'public, max-age=20');
+			/*$app->lastModified(1390486141);
+			$app->expires("+12 hours");*/
 		}
 	}
 
