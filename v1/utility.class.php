@@ -12,11 +12,11 @@ class Utility
 			/*$hash = md5($uri);
 			$app->etag($hash.$resetNum);
 			$app->expires("+12 hours");*/
-			$app->response->headers->set('Cache-Control', 'public, max-age=20');
+			$app->response->headers->set('Cache-Control', 'public, max-age=3600');
 		}
 		else if(strpos($uri, "/explore") == 0)
 		{
-			$app->response->headers->set('Cache-Control', 'public, max-age=20');
+			$app->response->headers->set('Cache-Control', 'public, max-age=3600');
 			/*$app->lastModified(1390486141);
 			$app->expires("+12 hours");*/
 		}
