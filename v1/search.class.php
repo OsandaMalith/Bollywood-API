@@ -90,7 +90,7 @@ class Search
 		$startWith = $this->query."%";
 		if ($this->isFinal)
 		{
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy ORDER BY $fuzzy DESC LIMIT 10";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy ORDER BY $fuzzy DESC LIMIT 50";
 			$search = $link->prepare($query);
 			$search->bind_param("ss", $this->query, $this->query);
 		}
