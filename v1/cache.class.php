@@ -25,7 +25,7 @@ class Cache
 		$this->obj = ($contents === False) ? NULL : unserialize($contents);
 	}
 
-	public function write()
+	private function write()
 	{
 		if ($this->obj == NULL)
 			return;
