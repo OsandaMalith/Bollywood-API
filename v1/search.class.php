@@ -15,6 +15,10 @@ class Search
 
 	public function albums()
 	{
+		$cache = new Cache("search_albums_".$this->query."_".$this->isFinal);
+		if ($cache->obj != NULL)
+			return $cache->obj;
+
 		$this->searchFor = "albums";
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
@@ -27,11 +31,17 @@ class Search
 			$this->isFinal = false;
 		}
 		$this->sanitizeResults($results);
+		
+		$cache = new Cache("search_albums_".$this->query."_".$this->isFinal, $results);
 		return $results;
 	}
 
 	public function songs()
 	{
+		$cache = new Cache("search_songs_".$this->query."_".$this->isFinal);
+		if ($cache->obj != NULL)
+			return $cache->obj;
+
 		$this->searchFor = "songs";
 		$dhingana = $this->search("dhingana");
 		$songspk = $this->search("songspk");
@@ -44,6 +54,8 @@ class Search
 			$this->isFinal = false;
 		}
 		$this->sanitizeResults($results);
+		
+		$cache = new Cache("search_songs_".$this->query."_".$this->isFinal, $results);
 		return $results;
 	}
 	
@@ -108,25 +120,26 @@ class Search
 		$search->close();
 		
 		if ($this->searchFor == "albums")
-			return $this->processAlbumResults($ids);
+			$processed = $this->processAlbumResults($ids);
 		else
-			return $this->processSongResults($ids);
+			$processed = $this->processSongResults($ids);
+		return $processed;
 	}
 	
 	private function processSongResults(&$ids)
 	{
-		$songs = Song::songsFromArray($ids);
+		$songs = Song::songsFromArray($ids, False);
 		foreach($songs as $song)
-			$song->setAlbum();
+			$song->setAlbum(False);
 		return $songs;
 	}
 
 	private function processAlbumResults(&$ids)
 	{
-		$albums = (array) Album::albumsFromArray($ids);
+		$albums = (array) Album::albumsFromArray($ids, False);
 		foreach($albums as $key => $album)
 		{
-			$album->setSongs();
+			$album->setSongs(False);
 			if (count($album->Songs) == 0)
 				unset($albums[$key]);
 		}

@@ -11,25 +11,46 @@ class Song
 	public  $Name;
 	public  $Singers;
 	
-	function __construct($songid)
+	function __construct($songid, $createCache = True)
 	{
+		$cache = new Cache("song_$songid");
+		if ($cache->obj != NULL)
+		{
+			$this->copyFrom($cache->obj);
+			return;
+		}
+
 		$this->SongID = $songid;
 		$this->table = Utility::getTableFromID($this->SongID);
 		$this->internalSongid = Utility::getInternalID($this->SongID);
 		$this->fetchData();
+	
+		if ($createCache)
+			$cache = new Cache("song_$songid", $this);
 	}	
 
-	public static function songsFromArray($songids)
+	private function copyFrom($otherSong)
+	{
+		$this->internalSongid = $otherSong->internalSongid;
+		$this->internalAlbumid = $otherSong->internalAlbumid;
+		$this->table = $otherSong->table;
+		$this->SongID = $otherSong->SongID;
+		$this->AlbumID = $otherSong->AlbumID;
+		$this->Name = $otherSong->Name;
+		$this->Singers = $otherSong->Singers;
+	}
+
+	public static function songsFromArray($songids, $createCache = True)
 	{
 		$songs = array();
 		foreach($songids as $songid)
-			array_push($songs, new Song($songid));
+			array_push($songs, new Song($songid, $createCache));
 		return $songs;
 	}
 
-	public function setAlbum()
+	public function setAlbum($createCache = True)
 	{
-		$this->Album = new Album($this->AlbumID);
+		$this->Album = new Album($this->AlbumID, $createCache);
 	}
 
 	public function isEqualTo(&$song)

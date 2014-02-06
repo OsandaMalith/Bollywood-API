@@ -15,24 +15,49 @@ class Album
 	public  $AlbumArtBig;
 	public  $AlbumArtSmall;
 
-	function __construct($albumid)
+	function __construct($albumid, $createCache = True)
 	{
+		$cache = new Cache("album_$albumid");
+		if ($cache->obj != NULL)
+		{
+			$this->copyFrom($cache->obj);
+			return;
+		}
+
 		$this->AlbumID = $albumid;
 		$this->table = Utility::getTableFromID($this->AlbumID);
 		$this->internalAlbumid = Utility::getInternalID($this->AlbumID);
 		$this->fetchData();
 		$this->fetchMapData();
+	
+		if ($createCache)
+			$cache = new Cache("album_$albumid", $this);
 	}
 
-	public static function albumsFromArray(&$albumids)
+	private function copyFrom($otherAlbum)
+	{
+		$this->internalAlbumid = $otherAlbum->internalAlbumid;
+		$this->table = $otherAlbum->table;
+		$this->map = $otherAlbum->map;
+		$this->AlbumArt = $otherAlbum->AlbumArt;
+		$this->AlbumID = $otherAlbum->AlbumID;
+		$this->Name = $otherAlbum->Name;
+		$this->Cast = $otherAlbum->Cast;
+		$this->MusicDirector = $otherAlbum->MusicDirector;
+		$this->Year = $otherAlbum->Year;
+		$this->AlbumArtBig = $otherAlbum->AlbumArtBig;
+		$this->AlbumArtSmall = $otherAlbum->AlbumArtSmall;
+	}
+
+	public static function albumsFromArray(&$albumids, $createCache = True)
 	{
 		$albums = array();
 		foreach($albumids as $albumid)
-			array_push($albums, new Album($albumid));
+			array_push($albums, new Album($albumid, $createCache));
 		return $albums;
 	}
 
-	public function setSongs()
+	public function setSongs($setCache = True)
 	{
 		global $link;
 		/*WORKAROUND SINCE SAAVN DOESNT HAVE SONGS*/	
@@ -52,7 +77,7 @@ class Album
 		while ($songids->fetch())
 			array_push($ids, Utility::getExternalID($songid, $table));
 		$songids->close();
-		$this->Songs = Song::songsFromArray($ids);
+		$this->Songs = Song::songsFromArray($ids, $setCache);
 	}
 
 	public function isEqualTo(&$album)
