@@ -15,6 +15,8 @@ class Cache
 		
 		if ($obj == NULL)
 			$this->read();
+		else
+			$this->write();
 	}
 
 	private function read()
