@@ -11,7 +11,7 @@ class Cache
 	{
 		$this->uniqueid = $uniqueid;
 		$this->fileName = $this->cacheDir.$this->uniqueid.".tmp";
-		$this->obj = json_decode(json_encode($obj));
+		$this->obj = $obj;
 		
 		if ($obj == NULL)
 			$this->read();
@@ -20,16 +20,17 @@ class Cache
 	private function read()
 	{
 		$contents = @file_get_contents($this->fileName);
-		$this->obj = ($contents === False) ? NULL : json_decode($contents);
+		$this->obj = ($contents === False) ? NULL : unserialize($contents);
 	}
 
 	public function write()
 	{
 		if ($this->obj == NULL)
 			return;
-		file_put_contents($this->fileName, json_encode($this->obj));
+		file_put_contents($this->fileName, serialize($this->obj));
 		
 		$this->read();
 	}
 }
+
 ?>
