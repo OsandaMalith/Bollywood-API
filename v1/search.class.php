@@ -15,7 +15,8 @@ class Search
 
 	public function albums()
 	{
-		$cache = new Cache("search_albums_".$this->query."_".$this->isFinal);
+		global $accessLevel;
+		$cache = new Cache("search_$accessLevel\_albums_".$this->query."_".$this->isFinal);
 		if ($cache->obj != NULL)
 			return $cache->obj;
 
@@ -32,13 +33,13 @@ class Search
 		}
 		$this->sanitizeResults($results);
 		
-		$cache = new Cache("search_albums_".$this->query."_".$this->isFinal, $results);
+		$cache = new Cache("search_$accessLevel\_albums_".$this->query."_".$this->isFinal, $results);
 		return $results;
 	}
 
 	public function songs()
 	{
-		$cache = new Cache("search_songs_".$this->query."_".$this->isFinal);
+		$cache = new Cache("search_$accessLevel\_songs_".$this->query."_".$this->isFinal);
 		if ($cache->obj != NULL)
 			return $cache->obj;
 
@@ -55,7 +56,7 @@ class Search
 		}
 		$this->sanitizeResults($results);
 		
-		$cache = new Cache("search_songs_".$this->query."_".$this->isFinal, $results);
+		$cache = new Cache("search_$accessLevel\_songs_".$this->query."_".$this->isFinal, $results);
 		return $results;
 	}
 	

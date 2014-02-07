@@ -15,7 +15,7 @@ class Song
 	{
 		global $accessLevel;
 		$cache = new Cache("song_$accessLevel\_$songid");
-		if (false && $cache->obj != NULL)
+		if ($cache->obj != NULL)
 		{
 			$this->copyFrom($cache->obj);
 			return;
@@ -79,8 +79,8 @@ class Song
 	{
 		global $accessLevel;
 
-		//if ($accessLevel == 0)
-		//	unset($this->Mp3);
+		if ($accessLevel == 0)
+			unset($this->Mp3);
 
 		if ($this->Singers !="" )
 			$this->Singers = json_decode($this->Singers);
