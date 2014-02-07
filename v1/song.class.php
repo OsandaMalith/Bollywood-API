@@ -13,8 +13,9 @@ class Song
 	
 	function __construct($songid, $createCache = True)
 	{
-		$cache = new Cache("song_$songid");
-		if ($cache->obj != NULL)
+		global $accessLevel;
+		$cache = new Cache("song_$accessLevel\_$songid");
+		if (false && $cache->obj != NULL)
 		{
 			$this->copyFrom($cache->obj);
 			return;
@@ -26,7 +27,7 @@ class Song
 		$this->fetchData();
 	
 		if ($createCache)
-			$cache = new Cache("song_$songid", $this);
+			$cache = new Cache("song_$accessLevel\_$songid", $this);
 	}	
 
 	private function copyFrom($otherSong)
@@ -78,8 +79,8 @@ class Song
 	{
 		global $accessLevel;
 
-		if ($accessLevel == 0)
-			unset($this->Mp3);
+		//if ($accessLevel == 0)
+		//	unset($this->Mp3);
 
 		if ($this->Singers !="" )
 			$this->Singers = json_decode($this->Singers);

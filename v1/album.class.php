@@ -18,7 +18,7 @@ class Album
 	function __construct($albumid, $createCache = True)
 	{
 		$cache = new Cache("album_$albumid");
-		if ($cache->obj != NULL)
+		if (false && $cache->obj != NULL)
 		{
 			$this->copyFrom($cache->obj);
 			return;
