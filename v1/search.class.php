@@ -39,6 +39,7 @@ class Search
 
 	public function songs()
 	{
+		global $accessLevel;
 		$cache = new Cache("search-$accessLevel-songs-".$this->query."-".$this->isFinal);
 		if ($cache->obj != NULL)
 			return $cache->obj;
