@@ -14,7 +14,7 @@ class Song
 	function __construct($songid, $createCache = True)
 	{
 		global $accessLevel;
-		$cache = new Cache("song_$accessLevel\_$songid");
+		$cache = new Cache("song-$accessLevel-$songid");
 		if ($cache->obj != NULL)
 		{
 			$this->copyFrom($cache->obj);
@@ -27,7 +27,7 @@ class Song
 		$this->fetchData();
 	
 		if ($createCache)
-			$cache = new Cache("song_$accessLevel\_$songid", $this);
+			$cache = new Cache("song-$accessLevel-$songid", $this);
 	}	
 
 	private function copyFrom($otherSong)
