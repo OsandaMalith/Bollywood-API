@@ -78,8 +78,8 @@ class Song
 	{
 		global $accessLevel;
 
-		if ($accessLevel == 0)
-			unset($this->Mp3);
+		//if ($accessLevel == 0)
+		//	unset($this->Mp3);
 
 		if ($this->Singers !="" )
 			$this->Singers = json_decode($this->Singers);
