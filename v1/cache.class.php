@@ -27,7 +27,8 @@ class Cache
 
 	private function write()
 	{
-		if ($this->obj == NULL)
+		global $accessLevel;
+		if ($this->obj == NULL || $accessLevel == 0)
 			return;
 		file_put_contents($this->fileName, serialize($this->obj));
 		
