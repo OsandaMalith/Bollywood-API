@@ -17,8 +17,7 @@ class Album
 
 	function __construct($albumid, $createCache = True)
 	{
-		global $accessLevel;
-		$cache = new Cache("album-$accessLevel-$albumid");
+		$cache = new Cache("album-$albumid");
 		if ($cache->obj != NULL)
 		{
 			$this->copyFrom($cache->obj);
@@ -32,7 +31,7 @@ class Album
 		$this->fetchMapData();
 	
 		if ($createCache)
-			$cache = new Cache("album-$accessLevel-$albumid", $this);
+			$cache = new Cache("album-$albumid", $this);
 	}
 
 	private function copyFrom($otherAlbum)
