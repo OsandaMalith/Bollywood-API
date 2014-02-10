@@ -38,6 +38,7 @@ class Song
 		$this->AlbumID = $otherSong->AlbumID;
 		$this->Name = $otherSong->Name;
 		$this->Singers = $otherSong->Singers;
+		$this->Mp3 = $otherSong->Mp3;
 	}
 
 	public static function songsFromArray($songids, $createCache = True)
