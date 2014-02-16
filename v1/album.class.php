@@ -142,7 +142,8 @@ class Album
 		$this->map["SaavnID"] = $saavnid;
 		$this->map["PKID"] = $pkid;
 		$this->map["DhinganaID"] = $dhinganaid;
-
+		//OVERRIDE DHINGANA MAP
+		$this->map["DhinganaID"] = -1;
 	}
 
 	private function sanitize()

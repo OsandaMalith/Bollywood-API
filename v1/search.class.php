@@ -20,9 +20,9 @@ class Search
 			return $cache->obj;
 
 		$this->searchFor = "albums";
-		$dhingana = $this->search("dhingana");
-		$songspk = $this->search("songspk");
-		$results = Search::uniqueMerge($songspk, $dhingana);
+		//$dhingana = $this->search("dhingana");
+		$results = $this->search("songspk");
+		//$results = Search::uniqueMerge($songspk, $dhingana);
 		if (!$this->isFinal)
 		{
 			$this->isFinal = true;
@@ -44,9 +44,9 @@ class Search
 			return $cache->obj;
 
 		$this->searchFor = "songs";
-		$dhingana = $this->search("dhingana");
-		$songspk = $this->search("songspk");
-		$results = Search::uniqueMerge($songspk, $dhingana);
+		//$dhingana = $this->search("dhingana");
+		$results = $this->search("songspk");
+		//$results = Search::uniqueMerge($songspk, $dhingana);
 		if (!$this->isFinal)
 		{
 			$this->isFinal = true;
