@@ -2,7 +2,7 @@
 
 class Cache
 {
-	private $shouldUseCache = false;
+	private $shouldUseCache = true;
 	private $cacheDir = "/dev/shm/";
 	private $fileName;
 	public  $uniqueid;
