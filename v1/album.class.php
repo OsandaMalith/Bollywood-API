@@ -5,7 +5,7 @@ class Album
 {
 	private $internalAlbumid;
 	private $table;
-	private $map;
+	//private $map;
 	private $AlbumArt;
 	public  $AlbumID;
 	public  $Name;
@@ -28,7 +28,7 @@ class Album
 		$this->table = Utility::getTableFromID($this->AlbumID);
 		$this->internalAlbumid = Utility::getInternalID($this->AlbumID);
 		$this->fetchData();
-		$this->fetchMapData();
+		//$this->fetchMapData();
 	
 		if ($createCache)
 			$cache = new Cache("album-$albumid", $this);
@@ -38,7 +38,7 @@ class Album
 	{
 		$this->internalAlbumid = $otherAlbum->internalAlbumid;
 		$this->table = $otherAlbum->table;
-		$this->map = $otherAlbum->map;
+		//$this->map = $otherAlbum->map;
 		$this->AlbumArt = $otherAlbum->AlbumArt;
 		$this->AlbumID = $otherAlbum->AlbumID;
 		$this->Name = $otherAlbum->Name;
@@ -60,22 +60,13 @@ class Album
 	public function setSongs($setCache = True)
 	{
 		global $link;
-		/*WORKAROUND SINCE SAAVN DOESNT HAVE SONGS*/	
-		$albumid = $this->internalAlbumid;
-		$table = $this->table;
-		if ($table == "saavn")
-		{
-			$table = "songspk";
-			$albumid = $this->map["PKID"];
-		}	
-		/*---------------------------------------*/
-		$songids = $link->prepare("SELECT SongID from ".$table."_songs WHERE AlbumID=?");
-		$songids->bind_param("i", $albumid);
+		$songids = $link->prepare("SELECT SongID from ".$this->table."_songs WHERE AlbumID=?");
+		$songids->bind_param("i", $this->internalAlbumid);
 		$songids->execute();
 		$songids->bind_result($songid);
 		$ids = array();
 		while ($songids->fetch())
-			array_push($ids, Utility::getExternalID($songid, $table));
+			array_push($ids, Utility::getExternalID($songid, $this->table));
 		$songids->close();
 		$this->Songs = Song::songsFromArray($ids, $setCache);
 	}
@@ -97,7 +88,7 @@ class Album
 
 		$this->sanitize();
 	}
-
+	/*
 	private function fetchMapData()
 	{
 		global $link;
@@ -145,7 +136,7 @@ class Album
 		//OVERRIDE DHINGANA MAP
 		$this->map["DhinganaID"] = -1;
 	}
-
+	*/
 	private function sanitize()
 	{
 		if ($this->Cast != "")
