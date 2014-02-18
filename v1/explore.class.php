@@ -8,9 +8,9 @@ class Explore
 
 	function __construct()
 	{
-		$latest = array("p_3390", "p_3389", "p_3388", "p_3387", "p_3384", "p_3386", "p_3385", "p_3383", "p_3381", "p_3023", "p_979", "p_1172", "p_2825", "p_102", "p_2922");
-		$popular = array("p_2394", "p_341", "p_100");
-		$random = array("p_2843", "p_735", "p_161","p_2563", "p_2161");
+		$latest = array("s_21254", "s_21253", "p_3388", "s_21252", "s_21248", "s_21251", "s_21249", "s_21250", "s_21246");
+		$popular = array("s_21243", "s_21244", "s_21245", "s_3497", "s_3025");
+		$random = array("s_6878", "s_9836", "s_3050", "s_1191");
 
 		$this->getAlbums($latest);
 		$this->getAlbums($popular);
