@@ -21,7 +21,7 @@ class Search
 
 		$this->searchFor = "albums";
 		//$dhingana = $this->search("dhingana");
-		$results = $this->search("songspk");
+		$results = $this->search("saavn");
 		//$results = Search::uniqueMerge($songspk, $dhingana);
 		if (!$this->isFinal)
 		{
@@ -45,7 +45,7 @@ class Search
 
 		$this->searchFor = "songs";
 		//$dhingana = $this->search("dhingana");
-		$results = $this->search("songspk");
+		$results = $this->search("saavn");
 		//$results = Search::uniqueMerge($songspk, $dhingana);
 		if (!$this->isFinal)
 		{
