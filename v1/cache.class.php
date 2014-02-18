@@ -2,6 +2,7 @@
 
 class Cache
 {
+	private $shouldUseCache = false;
 	private $cacheDir = "/dev/shm/";
 	private $fileName;
 	public  $uniqueid;
@@ -13,7 +14,7 @@ class Cache
 		$this->fileName = $this->cacheDir.$this->uniqueid.".tmp";
 		$this->obj = $obj;
 		
-		if ($obj == NULL)
+		if ($obj == NULL && $this->shouldUseCache)
 			$this->read();
 		else
 			$this->write();
