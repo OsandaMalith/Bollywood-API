@@ -16,21 +16,12 @@ class Search
 	public function albums()
 	{
 		$cache = new Cache("search-albums-".$this->query."-".$this->isFinal);
-		if ($cache->obj != NULL)
+		if (false && $cache->obj != NULL)
 			return $cache->obj;
 
 		$this->searchFor = "albums";
-		//$dhingana = $this->search("dhingana");
 		$results = $this->search("saavn");
-		//$results = Search::uniqueMerge($songspk, $dhingana);
-		if (!$this->isFinal)
-		{
-			$this->isFinal = true;
-			$newResults = $this->albums();
-			$results = Search::uniqueMerge($results, $newResults);
-			$this->isFinal = false;
-		}
-		$this->sanitizeResults($results);
+		//$this->sanitizeResults($results);
 		
 		$cache = new Cache("search-albums-".$this->query."-".$this->isFinal, $results);
 		return $results;
@@ -40,21 +31,12 @@ class Search
 	{
 		global $accessLevel;
 		$cache = new Cache("search-songs-".$this->query."-".$this->isFinal);
-		if ($cache->obj != NULL)
+		if (false && $cache->obj != NULL)
 			return $cache->obj;
 
 		$this->searchFor = "songs";
-		//$dhingana = $this->search("dhingana");
 		$results = $this->search("saavn");
-		//$results = Search::uniqueMerge($songspk, $dhingana);
-		if (!$this->isFinal)
-		{
-			$this->isFinal = true;
-			$newResults = $this->songs();
-			$results = Search::uniqueMerge($results, $newResults);
-			$this->isFinal = false;
-		}
-		$this->sanitizeResults($results);
+		//$this->sanitizeResults($results);
 		
 		$cache = new Cache("search-songs-".$this->query."-".$this->isFinal, $results);
 		return $results;
@@ -93,7 +75,7 @@ class Search
 	{
 		global $link;
 	
-		$fuzzy = "match(Name) against (?)";
+		$fuzzy = "damlev(Name, ?)";
 	
 		if ($this->searchFor == "albums")
 			$idField = "AlbumID";
@@ -103,7 +85,7 @@ class Search
 		$startWith = $this->query."%";
 		if ($this->isFinal)
 		{
-			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy ORDER BY $fuzzy DESC LIMIT 50";
+			$query = "SELECT $idField FROM ".$table."_".$this->searchFor." WHERE $fuzzy <=3 ORDER BY $fuzzy ASC limit 10";
 			$search = $link->prepare($query);
 			$search->bind_param("ss", $this->query, $this->query);
 		}
