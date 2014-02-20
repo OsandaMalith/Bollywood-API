@@ -16,12 +16,11 @@ class Search
 	public function albums()
 	{
 		$cache = new Cache("search-albums-".$this->query."-".$this->isFinal);
-		if (false && $cache->obj != NULL)
+		if ($cache->obj != NULL)
 			return $cache->obj;
 
 		$this->searchFor = "albums";
 		$results = $this->search("saavn");
-		//$this->sanitizeResults($results);
 		
 		$cache = new Cache("search-albums-".$this->query."-".$this->isFinal, $results);
 		return $results;
@@ -31,12 +30,11 @@ class Search
 	{
 		global $accessLevel;
 		$cache = new Cache("search-songs-".$this->query."-".$this->isFinal);
-		if (false && $cache->obj != NULL)
+		if ($cache->obj != NULL)
 			return $cache->obj;
 
 		$this->searchFor = "songs";
 		$results = $this->search("saavn");
-		//$this->sanitizeResults($results);
 		
 		$cache = new Cache("search-songs-".$this->query."-".$this->isFinal, $results);
 		return $results;
