@@ -63,6 +63,16 @@ $app->get('/user/create', function() {
         echo json_encode(User::create());
 });
 
+$app->post("/user/:userid/pushtoken", function ($userid) {
+	global $app;
+	$user = new User;
+	$user->setUserid($userid);
+	$token = json_decode($app->request->getBody());
+	$user->pushToken = $token->PushToken;
+	$user->save();
+	Utility::json("success");
+});
+
 $app->post("/user/:userid/activity", function($userid) {
         global $app;
 	$user = new User;
@@ -85,16 +95,20 @@ class ValidationMiddleware extends \Slim\Middleware
 {
 	public function call()
 	{
-		global $version;
+		global $version, $accessLevel;
 		$app = $this->app;
 		/*REMOVE WHEN 1.0 IS NOT USED ANYMORE*/
-		if ($app->request->get("Version") == NULL)
+		if ($app->request->get("Version") == NULL && $app->request->get("DeveloperID") == "3f5f40c8")
 		{
-			$this->next->call();
-			return;
+			$isValid = true;
+			$accessLevel = 1;
 		}
 		else
+		{
 			$version = $app->request->get("Version");
+			$isValid = false;
+		}
+		if (!$isValid)
 		/*-----------------------------------*/
 		$isValid = Utility::validateRequest(	$app->request->get("DeveloperID"), 
 							$app->request->headers->get("hmac"));
@@ -105,7 +119,7 @@ class ValidationMiddleware extends \Slim\Middleware
 }
 $accessLevel = 1;
 $version = "1.0";
-$app->add(new \ValidationMiddleware());
+//$app->add(new \ValidationMiddleware());
 $app->run();
 
 ?>
