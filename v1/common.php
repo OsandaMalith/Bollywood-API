@@ -2,7 +2,7 @@
 error_reporting(0);
 ob_start("ob_gzhandler");
 
-$DEBUG = (strpos($_SERVER["HTPP_HOST"], "bollywoodapi.com") === false && strpos($_SERVER["HTTP_HOST"], "filmiapp.com") === false);
+$DEBUG = (strpos($_SERVER["HTPP_HOST"], "bollywoodapi.com") === false && strpos($_SERVER["HTTP_HOST"], "api.filmiapp.com") === false);
 
 require_once("utility.class.php");
 require_once("search.class.php");
