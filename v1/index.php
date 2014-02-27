@@ -109,9 +109,9 @@ class ValidationMiddleware extends \Slim\Middleware
 			$this->next->call();
 	}
 }
-$accessLevel = 1;
+$accessLevel = 0;
 $version = "1.0";
-//$app->add(new \ValidationMiddleware());
+$app->add(new \ValidationMiddleware());
 $app->run();
 
 ?>
