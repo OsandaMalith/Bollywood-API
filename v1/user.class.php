@@ -7,25 +7,6 @@ class User
 	public $pushToken;
 	public $exists;
 
-	public static function create()
-	{
-		global $link, $accessLevel;
-		if ($accessLevel == 0)
-			return;
-		
-		$password = "Password";
-		$timestamp = time();
-		$createUser = $link->prepare("INSERT INTO users (Password,CreatedOn) VALUES (?,?)");
-		$createUser->bind_param("si", $password, $timestamp);
-		$createUser->execute();
-		$createUser->close();
-
-		$id = $link->insert_id;
-		
-		$response = array('UserID'=>$id);
-		return $response;
-	}
-
 	public function setUserid($userid)
 	{
 		$this->userid = $userid;
@@ -48,10 +29,9 @@ class User
 
 	private function load()
 	{
-		$password = "Password";
 		global $link;
-		$login = $link->prepare("SELECT UserID,PushToken FROM users WHERE UserID=? AND Password=? ");
-		$login->bind_param("is", $this->userid, $password);
+		$login = $link->prepare("SELECT UserID,PushToken FROM users WHERE UserID=? ");
+		$login->bind_param("i", $this->userid);
 		$login->execute();
 		$login->store_result();
 		$login->bind_result($this->userid, $this->pushToken);
