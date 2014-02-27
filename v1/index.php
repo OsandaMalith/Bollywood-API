@@ -5,7 +5,32 @@ require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
+$app->config('debug', false);
 $app->response->headers->set('Content-Type', 'application/json');
+
+$app->error(function(\Exception $e) {
+	$error = array(
+		"Slim"=>true,
+		"Number"=>$e->getCode(),
+		"Message"=>$e->getMessage(),
+		"File"=>$e->getFile(),
+		"Line"=>$e->getLine()
+	);
+	$error = json_encode(["Error"=>$error]);
+	Utility::sendMessage("tusharsoni1205@gmail.com", "Error", $error);
+	Utility::json("Error");
+});
+
+$app->notFound(function () use ($app) {
+	$error = array(
+		"Slim"=>true,
+		"Number"=>404,
+		"Message"=>$app->request->getPath()." not found",
+	);
+	$error = json_encode(["Error"=>$error]);
+	Utility::sendMessage("tusharsoni1205@gmail.com", "Error", $error);
+	Utility::json("Error");
+});
 
 $app->get('/', function () {
 	Utility::json("Hello World"); 	
@@ -109,9 +134,9 @@ class ValidationMiddleware extends \Slim\Middleware
 			$this->next->call();
 	}
 }
-$accessLevel = 1;
+$accessLevel = 0;
 $version = "1.0";
-//$app->add(new \ValidationMiddleware());
+$app->add(new \ValidationMiddleware());
 $app->run();
 
 ?>

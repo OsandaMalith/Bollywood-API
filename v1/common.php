@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 ob_start("ob_gzhandler");
 require_once("utility.class.php");
 require_once("search.class.php");
@@ -19,4 +20,21 @@ date_default_timezone_set("UTC");
 $link= new mysqli($DB_HOST, $DB_USER, $DB_PASS);
 $link->select_db($DB_DB);
 $link->set_charset("utf8");
+
+
+function handleError($errno, $errstr, $errfile, $errline)
+{
+	$error = array(
+		"Slim"=>false,
+		"Number"=>$errno,
+		"Message"=>$errstr,
+		"File"=>$errfile,
+		"Line"=>$errline
+	);
+	$error = json_encode(["Error"=>$error]);
+	Utility::sendMessage("tusharsoni1205@gmail.com", "Error", $error);
+	Utility::json("Error");
+}
+
+set_error_handler("handleError");
 ?>
