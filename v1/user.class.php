@@ -10,18 +10,8 @@ class User
 	public function setUserid($userid)
 	{
 		$this->userid = $userid;
-		$this->load();
+		//$this->load();
 	}
-
-	public function save()
-	{
-		global $link;
-		$update = $link->prepare("UPDATE users set PushToken=? WHERE UserID=?");
-		$update->bind_param("si", $this->pushToken, $this->userid);
-		$update->execute();
-		$update->close();
-	}
-
 	public function getUserid()
 	{
 		return $this->userid;
