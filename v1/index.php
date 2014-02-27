@@ -60,21 +60,13 @@ $app->get("/search/like/songs/:name", function($name) use ($app) {
 });
 
 $app->get('/user/create', function() {
-        echo json_encode(User::create());
-});
-
-$app->post("/user/:userid/pushtoken", function ($userid) {
 	global $app;
-	$user = new User;
-	$user->setUserid($userid);
-	$token = json_decode($app->request->getBody());
-	$user->pushToken = $token->PushToken;
-	$user->save();
-	Utility::json("success");
+	$analytics_url = "http://analytics.filmiapp.com/api/";
+	$app->response->redirect($analytics_url."user/create", 301);
 });
 
 $app->post("/user/:userid/activity", function($userid) {
-        global $app;
+	global $app;
 	$user = new User;
 	$user->setUserid($userid);
 	$activities = json_decode($app->request->getBody(), true);

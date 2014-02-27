@@ -23,7 +23,7 @@ class Activity
 	public function save()
 	{
 		global $link, $version, $accessLevel;
-		if ($this->exists() || !$this->user->exists || $accessLevel == 0)
+		if ($this->exists() || /*!$this->user->exists ||*/ $accessLevel == 0)
 			return;
  		$userid = $this->user->getUserid();
 		$save = $link->prepare("INSERT INTO activity (UserID, SongID, Action, `Timestamp`, Extra, Provider, Version) VALUES (?,?,?,?,?,?,?)");
