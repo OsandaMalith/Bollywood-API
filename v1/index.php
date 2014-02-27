@@ -5,7 +5,7 @@ require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
-$app->config('debug', false);
+$app->config('debug', $DEBUG);
 $app->response->headers->set('Content-Type', 'application/json');
 
 $app->error(function(\Exception $e) {
@@ -136,7 +136,8 @@ class ValidationMiddleware extends \Slim\Middleware
 }
 $accessLevel = 0;
 $version = "1.0";
-$app->add(new \ValidationMiddleware());
+if ($DEBUG == false)
+	$app->add(new \ValidationMiddleware());
 $app->run();
 
 ?>

@@ -1,6 +1,9 @@
 <?php
 error_reporting(0);
 ob_start("ob_gzhandler");
+
+$DEBUG = (strpos($_SERVER["HOST"], "bollywoodapi.com") === false && strpos($_SERVER["HOST"], "filmiapp.com") === false);
+
 require_once("utility.class.php");
 require_once("search.class.php");
 require_once("album.class.php");
@@ -36,5 +39,6 @@ function handleError($errno, $errstr, $errfile, $errline)
 	Utility::json("Error");
 }
 
-set_error_handler("handleError");
+if ($DEBUG == false)
+	set_error_handler("handleError");
 ?>
