@@ -1,3 +1,21 @@
+## 1.7 (2014-1-30)
+
+Bugfixes:
+  - patched bug for attachments related to duplicate aggregator bug in Guzzle (#32 @travelton)
+
+## 1.6 (2014-1-13)
+
+Enhancement:
+  - adjust file attachment/inline name (#21 @travelton)
+
+Bugfixes:
+  - fixed issue with unordered route actions (#23 @travelton)
+
+## 1.5 (2013-12-13)
+
+Enhancement:
+  - added ability to define non-https endpoint for debugging purposes (#23 @travelton)
+
 ## 1.4 (2013-10-16)
 
 Bugfixes:

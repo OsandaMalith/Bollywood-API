@@ -2,7 +2,7 @@
 error_reporting(0);
 ob_start("ob_gzhandler");
 
-if ($_SERVER["HTTP_HOST"] == "www.bollywoodapi.com" || $_SERVER["HTTP_HOST"] == "api.filmiapp.com")
+if ($_SERVER["HTTP_HOST"] == "www.bollywoodapi.com" || $_SERVER["HTTP_HOST"] == "bollywoodapi.com" || $_SERVER["HTTP_HOST"] == "api.filmiapp.com")
 	$DEBUG = false;
 else
 	$DEBUG = true; 

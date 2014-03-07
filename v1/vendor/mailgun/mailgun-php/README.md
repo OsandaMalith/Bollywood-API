@@ -22,10 +22,12 @@ composer and the Mailgun SDK.
 curl -sS https://getcomposer.org/installer | php
 
 # Add Mailgun as a dependency
-php composer.phar require mailgun/mailgun-php:~1.5
+php composer.phar require mailgun/mailgun-php:~1.7
 ``` 
 
 **For shared hosts without SSH access, check out our [Shared Host Instructions](SharedHostInstall.md).**
+
+**Rather just download the files? [Library Download](https://9f67cbbd1116d8afb399-7760483f5d1e5f28c2d253278a2a5045.ssl.cf2.rackcdn.com/mailgun-php-1.7.zip).**
 
 Next, require Composer's autoloader, in your application, to automatically 
 load the Mailgun SDK in your project:
@@ -120,6 +122,37 @@ object(stdClass)#26 (2) {
 }
 ```
 
+Debugging
+---------
+
+Debugging the PHP SDK can be really helpful when things aren't working quite right. 
+To debug the SDK, here are some suggestions: 
+
+Set the endpoint to Mailgun's Postbin. A Postbin is a web service that allows you to 
+post data, which is then displayed through a browser. This allows you to quickly determine
+what is actually being transmitted to Mailgun's API. 
+
+**Step 1 - Create a new Postbin.**  
+Go to http://bin.mailgun.net. The Postbin will generate a special URL. Save that URL. 
+
+**Step 2 - Instantiate the Mailgun client using Postbin.**  
+
+*Tip: The bin id will be the URL part after bin.mailgun.net. It will be random generated letters and numbers. For example, the bin id in this URL, http://bin.mailgun.net/aecf68de, is "aecf68de".*
+
+```php
+# First, instantiate the SDK with your API credentials and define your domain. 
+$mg = new Mailgun('key-example', 'bin.mailgun.net', 'aecf68de', $ssl = False);
+$domain = 'example.com';
+
+# Now, compose and send your message.
+$mg->sendMessage($domain, array('from'    => 'bob@example.com', 
+                                'to'      => 'sally@example.com', 
+                                'subject' => 'The PHP SDK is awesome!', 
+                                'text'    => 'It is so simple to send a message.'));
+```
+Additional Info
+---------------
+
 For usage examples on each API endpoint, head over to our official documentation 
 pages. 
 
@@ -144,3 +177,14 @@ If you find a bug, please submit the issue in Github directly.
 
 As always, if you need additional assistance, drop us a note at 
 [support@mailgun.com](mailto:support@mailgun.com).
+
+Community Donations
+-------------------
+
+This project supports community developers via http://tip4commit.com. If participating, developers will receive a Bitcoin tip for each commit that is merged to the master branch. 
+
+Note: Core developers, who receive a tip, will donate those tips back to the project's tip jar. This includes all Mailgun employees. While Mailgun sponsors this project, it does not accept or receive any tips.
+
+If you'd like to support the community, add Bitcoins to the tip jar: 1JnvwDXjGhbCSna8XQiPkwLw9WCvEAy1DH. 
+
+[![tip for next commit](http://tip4commit.com/projects/214.svg)](http://tip4commit.com/projects/214)
