@@ -24,12 +24,12 @@ class Activity
 	public function saveAsEvent()
 	{
 		global $version;
-		$event = [
+		$event = array( 
 			"UserID"=>$this->user->getUserid(),
 			"Timestamp"=>$this->timestamp,
 			"AppVersion"=>$version,
 			"Country"=>"--"
-		];
+		);
 
 		if ($this->table == "dhingana")
 			$songid = "d_".$this->songid;
@@ -41,34 +41,34 @@ class Activity
 		if ($this->action == "AddedToPlaylist")
 		{
 			$event["Name"] = "Song Add Playlist";
-			$event["Attributes"] = [
-				[
+			$event["Attributes"] = array(
+				array(
 					"Name"=>"SongID",
 					"Value"=>$songid
-				],
-				[
+				),
+				array(
 					"Name"=>"Origin",
 					"Value"=>$extra
-				]
-			];
+				)
+			);
 		}
 		else if($this->action == "Downloaded")
 		{
 			$event["Name"] = "Song Download";
-			$event["Attributes"] = [
-				[
+			$event["Attributes"] = array(
+				array(
 					"Name"=>"SongID",
 					"Value"=>$songid
-				],
-				[
+				),
+				array(
 					"Name"=>"Success",
 					"Value"=>"Yes"
-				],
-				[
+				),
+				array(
 					"Name"=>"Origin",
 					"Value"=>$this->extra
-				]
-			];
+				)
+			);
 		}
 		else if($this->action == "FinishedListening")
 		{
@@ -82,19 +82,19 @@ class Activity
 			else if($extra >= 0.50 && $extra < 0.75)
 				$completed_bucket = "50 - 75%";
 
-			$event["Attributes"] = [
-				[
+			$event["Attributes"] = array(
+				array(
 					"Name"=>"SongID",
 					"Value"=>$songid
-				],
-				[
+				),
+				array(
 					"Name"=>"Completed Percent",
 					"Value"=>$completed_bucket
-				]
-			];
+				)
+			);
 		}
 		
-		\Analytics\Put\Event::insertMultiple([$event]);
+		\Analytics\Put\Event::insertMultiple(array($event));
 	}
 
 	public function save()

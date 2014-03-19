@@ -6,7 +6,7 @@ if ($_SERVER["HTTP_HOST"] == "www.bollywoodapi.com" || $_SERVER["HTTP_HOST"] == 
 	$DEBUG = false;
 else
 	$DEBUG = true; 
-
+$DEBUG = true;
 require_once("utility.class.php");
 require_once("search.class.php");
 require_once("album.class.php");
@@ -14,8 +14,7 @@ require_once("song.class.php");
 require_once("developer.class.php");
 require_once("activity.class.php");
 require_once("user.class.php");
-require_once("explore.class.php");
-require_once("statistics.class.php");
+require_once("explore.php");
 require_once("cache.class.php");
 require_once("secret.php");
 
@@ -37,9 +36,9 @@ function handleError($errno, $errstr, $errfile, $errline)
 		"File"=>$errfile,
 		"Line"=>$errline
 	);
-	$error = json_encode(["Error"=>$error]);
+	$error = json_encode(array("Error"=>$error));
 	Utility::sendMessage("tusharsoni1205@gmail.com", "Error", $error);
-	Utility::json("Error");
+	echo $error;
 }
 
 if ($DEBUG == false)

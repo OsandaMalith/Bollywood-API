@@ -3,7 +3,7 @@
 class Cache
 {
 	private $shouldUseCache = true;
-	private $cacheDir = "/dev/shm/";
+	private $cacheDir = "/run/shm/";
 	private $fileName;
 	public  $uniqueid;
 	public  $obj;
@@ -32,7 +32,6 @@ class Cache
 		if ($this->obj == NULL || $accessLevel == 0)
 			return;
 		file_put_contents($this->fileName, serialize($this->obj));
-		
 		$this->read();
 	}
 }

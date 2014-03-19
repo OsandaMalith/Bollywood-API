@@ -16,9 +16,9 @@ $app->error(function(\Exception $e) {
 		"File"=>$e->getFile(),
 		"Line"=>$e->getLine()
 	);
-	$error = json_encode(["Error"=>$error]);
+	$error = json_encode(array("Error"=>$error));
 	Utility::sendMessage("tusharsoni1205@gmail.com", "Error", $error);
-	Utility::json("Error");
+	echo $error;
 });
 
 $app->notFound(function () use ($app) {
@@ -27,9 +27,9 @@ $app->notFound(function () use ($app) {
 		"Number"=>404,
 		"Message"=>$app->request->getPath()." not found",
 	);
-	$error = json_encode(["Error"=>$error]);
-	Utility::sendMessage("tusharsoni1205@gmail.com", "Error", $error);
-	Utility::json("Error");
+	$error = json_encode(array("Error"=>$error));
+	//Utility::sendMessage("tusharsoni1205@gmail.com", "Error", $error);
+	echo $error;
 });
 
 $app->get('/', function () {
@@ -105,7 +105,7 @@ $app->post("/user/:userid/activity", function($userid) {
 
 $app->get("/explore", function() use ($app) {
 	Utility::setCacheHeaders($app);
-        echo json_encode(new Explore);
+	echo json_encode(getExploreJSON());
 });
 
 class ValidationMiddleware extends \Slim\Middleware
@@ -134,7 +134,7 @@ class ValidationMiddleware extends \Slim\Middleware
 			$this->next->call();
 	}
 }
-$accessLevel = 0;
+$accessLevel = 1;
 $version = "1.0";
 if ($DEBUG == false)
 	$app->add(new \ValidationMiddleware());
