@@ -1,9 +1,9 @@
 <?php
 require_once("common.php");
 
-call_user_func($_GET["call"]);
+call_user_func("secure_".$_GET["call"]);
 
-function genStats()
+function secure_genStats()
 {
 	$stat = new Statistics(constant($_GET["period"]),
 				$_GET["pcount"],
@@ -15,13 +15,13 @@ function genStats()
 	echo json_encode($stat);
 }
 
-function signup()
+function secure_signup()
 {
 	$developer = new Developer($_GET["email"], "Email");
 	$developer->create();
 }
 
-function search()
+function secure_search()
 {
 	global $PRIVATEKEY, $DEVID;
 	$timestamp = time();
